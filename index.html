@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sangam Khanna — Analyst · Engineer · Leader</title>
+  <meta name="description"
+    content="I find signal in the noise. Portfolio of Sangam Khanna — data analyst, ML engineer, and technical leader building impact through analytics, code, and community." />
+  <meta name="author" content="Sangam Khanna" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Sangam Khanna — Analyst · Engineer · Leader" />
+  <meta property="og:description" content="I find signal in the noise. Turning raw data into clear decisions." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="./IMG_2577.JPG.jpeg" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap"
+    rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+
+  <!-- ═══ PRELOADER ═══ -->
+  <div id="preloader">
+    <div class="preloader__inner">
+      <div class="preloader__logo">SK<span style="color: var(--accent)">.</span></div>
+      <div class="preloader__bar">
+        <div class="preloader__fill" id="preloader-fill"></div>
+      </div>
+      <div class="preloader__counter" id="preloader-counter">0</div>
+    </div>
+  </div>
+
+  <!-- ═══ CUSTOM CURSOR ═══ -->
+  <div id="cursor-dot" class="cursor-dot"></div>
+  <div id="cursor-ring" class="cursor-ring"></div>
+
+  <!-- ═══ NOISE OVERLAY ═══ -->
+  <div class="noise" id="noise" aria-hidden="true"></div>
+
+  <!-- ═══ SCROLL PROGRESS ═══ -->
+  <div id="scroll-progress" aria-hidden="true"></div>
+
+  <!-- ═══ NAVBAR ═══ -->
+  <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="#hero" class="nav__logo">SK<span class="nav__logo-dot">.</span></a>
+
+      <ul class="nav__links" id="nav-links" role="list">
+        <li><a href="#about" class="nav__link" data-nav>About</a></li>
+        <li><a href="#journey" class="nav__link" data-nav>Journey</a></li>
+        <li><a href="#work" class="nav__link" data-nav>Work</a></li>
+        <li><a href="#projects" class="nav__link" data-nav>Projects</a></li>
+        <li><a href="#leadership" class="nav__link" data-nav>Impact</a></li>
+        <li><a href="#contact" class="nav__link" data-nav>Contact</a></li>
+      </ul>
+
+      <a href="./Resume_Sangam_Khanna.pdf" target="_blank" rel="noopener" class="nav__resume magnetic" id="nav-resume">
+        Resume ↗
+      </a>
+
+      <button class="nav__burger" id="nav-burger" aria-label="Toggle menu">
+        <span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════════════════
+       HERO
+       ═══════════════════════════════════════════════════════ -->
+  <section class="hero" id="hero" aria-label="Introduction">
+    <div class="hero__bg" aria-hidden="true">
+      <div class="hero__orb hero__orb--1"></div>
+      <div class="hero__orb hero__orb--2"></div>
+      <div class="hero__orb hero__orb--3"></div>
+    </div>
+
+    <div class="hero__content">
+      <div class="hero__top">
+        <span class="hero__label" id="hero-label">Data Analyst · ML Engineer · Front-End Developer</span>
+      </div>
+
+      <h1 class="hero__name" id="hero-name" aria-label="Sangam Khanna">
+        <span class="hero__name-line" data-hero-text>SANGAM</span>
+        <span class="hero__name-line" data-hero-text>KHANNA</span>
+      </h1>
+
+      <div class="hero__bottom">
+        <div class="hero__tagline-wrap">
+          <p class="hero__tagline" id="hero-tagline">
+            I find <em>signal</em> in the noise: turning raw data into clear decisions, one model and dashboard at a
+            time.
+          </p>
+        </div>
+
+        <div class="hero__ctas" id="hero-ctas">
+          <a href="#projects" class="btn btn--primary magnetic" id="cta-work">
+            <span class="btn__text">View Projects</span>
+            <span class="btn__arrow">→</span>
+          </a>
+          <a href="./Resume_Sangam_Khanna.pdf" target="_blank" rel="noopener" class="btn btn--outline magnetic"
+            id="cta-resume">
+            <span class="btn__text">Resume</span>
+            <span class="btn__arrow">↗</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero__portrait" id="hero-portrait">
+      <div class="hero__portrait-inner">
+        <img src="./IMG_2577.JPG.jpeg" alt="Sangam Khanna — professional portrait" width="320" height="427" />
+      </div>
+    </div>
+
+    <div class="hero__scroll" id="hero-scroll">
+      <span>Scroll to explore</span>
+      <div class="hero__scroll-bar"></div>
+    </div>
+  </section>
+
+  <!-- ═══ MARQUEE ═══ -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <span>DATA ANALYST</span><span class="marquee__dot">✦</span>
+      <span>ML ENGINEER</span><span class="marquee__dot">✦</span>
+      <span>DASHBOARD ARCHITECT</span><span class="marquee__dot">✦</span>
+      <span>TECHNICAL LEADER</span><span class="marquee__dot">✦</span>
+      <span>SYSTEMS THINKER</span><span class="marquee__dot">✦</span>
+      <span>COMMUNITY BUILDER</span><span class="marquee__dot">✦</span>
+      <span>DATA ANALYST</span><span class="marquee__dot">✦</span>
+      <span>ML ENGINEER</span><span class="marquee__dot">✦</span>
+      <span>DASHBOARD ARCHITECT</span><span class="marquee__dot">✦</span>
+      <span>TECHNICAL LEADER</span><span class="marquee__dot">✦</span>
+      <span>SYSTEMS THINKER</span><span class="marquee__dot">✦</span>
+      <span>COMMUNITY BUILDER</span><span class="marquee__dot">✦</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       ABOUT
+       ═══════════════════════════════════════════════════════ -->
+  <section class="section section--about" id="about" aria-label="About">
+    <div class="container">
+      <span class="section__label">01 — About</span>
+
+      <h2 class="about__quote split-text">
+        I've always been drawn to the space between raw data and real decisions, the moment when noise becomes signal.
+      </h2>
+
+      <div class="about__body">
+        <div class="about__col">
+          <p class="reveal-up">
+            Most people see data as numbers on a screen. I see it as narrative, patterns waiting to be uncovered,
+            systems waiting to be understood, problems waiting for someone curious enough to solve them.
+          </p>
+          <p class="reveal-up">
+            Whether it's engineering an ML pipeline, developing a classy website, building dashboards,
+            working in corporate, or even listening to a friend's problem... I approach
+            everything with the same question: <em>what's the real problem here?</em>
+          </p>
+          <p class="reveal-up">
+            I'm not building a career in tech. I'm building a practice of thinking clearly, building deliberately, and
+            leading by doing.
+          </p>
+        </div>
+
+        <div class="about__pillars">
+          <div class="pillar reveal-up">
+            <span class="pillar__num">01</span>
+            <h3 class="pillar__title">Analytical Rigor</h3>
+            <p class="pillar__desc">I measure, model, and validate. No guessing.</p>
+          </div>
+          <div class="pillar reveal-up">
+            <span class="pillar__num">02</span>
+            <h3 class="pillar__title">Builder Mentality</h3>
+            <p class="pillar__desc">Ideas are cheap. Shipped projects matter.</p>
+          </div>
+          <div class="pillar reveal-up">
+            <span class="pillar__num">03</span>
+            <h3 class="pillar__title">Strategic Thinking</h3>
+            <p class="pillar__desc">Zoom out before zooming in.</p>
+          </div>
+          <div class="pillar reveal-up">
+            <span class="pillar__num">04</span>
+            <h3 class="pillar__title">Lead by Doing</h3>
+            <p class="pillar__desc">Build systems, not hierarchies.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ STATS ═══ -->
+  <section class="section section--stats" aria-label="Key metrics">
+    <div class="container">
+      <div class="stats__grid">
+        <div class="stat reveal-up">
+          <span class="stat__number" data-count="14">0</span><span class="stat__suffix">+</span>
+          <span class="stat__label">Projects Shipped</span>
+        </div>
+        <div class="stat reveal-up">
+          <span class="stat__number" data-count="35">0</span><span class="stat__suffix">%</span>
+          <span class="stat__label">Reporting Automated</span>
+        </div>
+        <div class="stat reveal-up">
+          <span class="stat__number" data-count="87">0</span><span class="stat__suffix">%</span>
+          <span class="stat__label">ML Model Accuracy</span>
+        </div>
+        <div class="stat reveal-up">
+          <span class="stat__number" data-count="11">0</span><span class="stat__suffix"></span>
+          <span class="stat__label">Major Events Led</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       JOURNEY
+       ═══════════════════════════════════════════════════════ -->
+  <section class="section section--journey" id="journey" aria-label="Journey">
+    <div class="container">
+      <span class="section__label">02 — Journey</span>
+      <h2 class="section__title split-text">The path so far.</h2>
+
+      <div class="timeline">
+        <div class="timeline__line">
+          <div class="timeline__progress" id="timeline-progress"></div>
+        </div>
+
+        <div class="timeline__item reveal-up">
+          <span class="timeline__year">2021</span>
+          <h3 class="timeline__title">Foundation Set</h3>
+          <p class="timeline__desc">CBSE 11th, Rich Harvest Public School, New Delhi. First encounter with computer
+            science subject, the seed that started everything.</p>
+        </div>
+
+        <div class="timeline__item reveal-up">
+          <span class="timeline__year">2023</span>
+          <h3 class="timeline__title">Found My Edge</h3>
+          <p class="timeline__desc">B.Tech CSE (Honors) at UPES Dehradun. Python, data structures, and the realization
+            that code is a tool for understanding and not just building.</p>
+        </div>
+
+        <div class="timeline__item reveal-up">
+          <span class="timeline__year">2024</span>
+          <h3 class="timeline__title">First Real Impact</h3>
+          <p class="timeline__desc">Built The Yogabhyas analytics platform. 22% improvement in conversion. The first
+            time data-driven decisions felt tangible.</p>
+        </div>
+
+        <div class="timeline__item reveal-up">
+          <span class="timeline__year">Early 2025</span>
+          <h3 class="timeline__title">Deep Into ML</h3>
+          <p class="timeline__desc">CineSentix: sentiment analysis at 87% accuracy. ArcheoVeda astronomical research.
+            Machine learning was suddenly sounding interesting.</p>
+        </div>
+
+        <div class="timeline__item reveal-up">
+          <span class="timeline__year">Mid 2025</span>
+          <h3 class="timeline__title">Industry Proof</h3>
+          <p class="timeline__desc">Data Visualization Intern at Ericsson. Power BI dashboards, automated reporting (35%
+            reduction), strategic insights for cross-functional teams. Got a chance to be in OpenAI Workbench 3.7
+            testing team.</p>
+        </div>
+
+        <div class="timeline__item reveal-up">
+          <span class="timeline__year">2025</span>
+          <h3 class="timeline__title">Leadership at Scale</h3>
+          <p class="timeline__desc">Chairperson, UPES ACM Student Chapter. Organized ICMLDE 3.0, ICACSDF'25, Lady
+            Ada'25, GGJ'25. Learned that execution is everything.</p>
+        </div>
+
+        <div class="timeline__item reveal-up">
+          <span class="timeline__year">Now</span>
+          <h3 class="timeline__title">Building Forward</h3>
+          <p class="timeline__desc"> Currently working on AI and Feature based projects including ARIMA and LSTM
+            modelling. Every project sharper than the last.</p>
+        </div>
+
+        <div class="timeline__item timeline__item--future reveal-up">
+          <span class="timeline__year">Next →</span>
+          <h3 class="timeline__title">What's Ahead</h3>
+          <p class="timeline__desc">Seeking roles where data, engineering, and impact intersect. Ready to contribute at
+            scale.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       WORK (Experience + Skills)
+       ═══════════════════════════════════════════════════════ -->
+  <section class="section section--work" id="work" aria-label="Experience and Skills">
+    <div class="container">
+      <span class="section__label">03 — Work</span>
+      <h2 class="section__title split-text">Where I've delivered.</h2>
+
+      <!-- Experience -->
+      <div class="work__experiences">
+        <article class="exp reveal-up">
+          <div class="exp__meta">
+            <span class="exp__period">Jun — Jul 2025</span>
+            <span class="exp__type">Internship</span>
+          </div>
+          <h3 class="exp__role">Data Visualization Intern</h3>
+          <p class="exp__company">Ericsson</p>
+          <ul class="exp__list">
+            <li>Built interactive Power BI dashboards monitoring operational KPIs across cross-functional teams</li>
+            <li>Automated reporting workflows → <strong>35% reduction</strong> in manual effort</li>
+            <li>Optimized DAX queries for enhanced data accuracy and dashboard performance</li>
+            <li>Delivered data-driven insights supporting strategic decision-making at scale</li>
+          </ul>
+        </article>
+
+        <article class="exp reveal-up">
+          <div class="exp__meta">
+            <span class="exp__period">Aug 2025</span>
+            <span class="exp__type">Simulation</span>
+          </div>
+          <h3 class="exp__role">Data Analytics</h3>
+          <p class="exp__company">Deloitte Australia</p>
+          <ul class="exp__list">
+            <li>Performed structured data cleaning and EDA on complex client datasets</li>
+            <li>Designed executive-level dashboards and KPI reports for business stakeholders</li>
+            <li>Generated insights contributing to <strong>18% improvement</strong> in operational efficiency</li>
+          </ul>
+        </article>
+      </div>
+
+      <!-- Skills -->
+      <h3 class="work__skills-title split-text">Tools of the trade.</h3>
+      <div class="skills__grid">
+        <div class="skill-group reveal-up">
+          <h4 class="skill-group__title">Programming</h4>
+          <div class="skill-group__pills">
+            <span>Python</span><span>R</span><span>JavaScript</span><span>C</span><span>SQL</span><span>HTML/CSS</span>
+          </div>
+        </div>
+        <div class="skill-group reveal-up">
+          <h4 class="skill-group__title">Data &amp; Analytics</h4>
+          <div class="skill-group__pills">
+            <span>EDA</span><span>Statistical Analysis</span><span>Predictive Modeling</span><span>Data
+              Wrangling</span><span>DAX</span>
+          </div>
+        </div>
+        <div class="skill-group reveal-up">
+          <h4 class="skill-group__title">Visualization</h4>
+          <div class="skill-group__pills">
+            <span>Power BI</span><span>Tableau</span><span>Excel
+              Dashboards</span><span>Matplotlib</span><span>Seaborn</span>
+          </div>
+        </div>
+        <div class="skill-group reveal-up">
+          <h4 class="skill-group__title">ML / AI</h4>
+          <div class="skill-group__pills">
+            <span>NLP</span><span>Sentiment
+              Analysis</span><span>TensorFlow</span><span>Scikit-learn</span><span>Regression</span><span>Classification</span>
+          </div>
+        </div>
+        <div class="skill-group reveal-up">
+          <h4 class="skill-group__title">Tools &amp; Platforms</h4>
+          <div class="skill-group__pills">
+            <span>Git</span><span>Linux</span><span>VS
+              Code</span><span>RapidMiner</span><span>N8N</span><span>Streamlit</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       PROJECTS
+       ═══════════════════════════════════════════════════════ -->
+  <section class="section section--projects" id="projects" aria-label="Projects">
+    <div class="container">
+      <span class="section__label">04 — Projects</span>
+      <h2 class="section__title split-text">Selected work.</h2>
+
+      <div class="projects__list">
+        <article class="project reveal-up" id="project-tourism">
+          <div class="project__index">01</div>
+          <div class="project__content">
+            <div class="project__meta">
+              <span class="project__status project__status--ongoing">Ongoing</span>
+              <div class="project__tags">
+                <span>Python</span><span>GIS / QGIS</span><span>Remote Sensing</span><span>Streamlit</span>
+              </div>
+            </div>
+            <h3 class="project__title">AI-Based Tourism Pressure &amp; Ecosystem Stress Management</h3>
+            <p class="project__desc">Building an AI framework integrating satellite imagery, climate data, and tourism
+              datasets to model environmental impact across Kedarnath, Badrinath, Gangotri, and Yamunotri.</p>
+            <p class="project__impact"><strong>Predictive stress indicators</strong> for policy-level environmental
+              planning across four major pilgrimage zones.</p>
+          </div>
+        </article>
+
+        <article class="project reveal-up" id="project-cinesentix">
+          <div class="project__index">02</div>
+          <div class="project__content">
+            <div class="project__meta">
+              <span class="project__status project__status--completed">Completed</span>
+              <div class="project__tags">
+                <span>R</span><span>Machine Learning</span><span>NLP</span><span>React</span><span>Vite</span>
+              </div>
+            </div>
+            <h3 class="project__title">CineSentix — Sentiment Analysis Engine</h3>
+            <p class="project__desc">End-to-end sentiment classification pipeline for movie reviews with structured
+              preprocessing, feature engineering, and model validation. Built a secure React dashboard for real-time
+              analytics.</p>
+            <p class="project__impact"><strong>87% prediction accuracy.</strong> Production-grade pipeline with secure
+              front-end visualization.</p>
+          </div>
+        </article>
+
+        <article class="project reveal-up" id="project-archeoveda">
+          <div class="project__index">03</div>
+          <div class="project__content">
+            <div class="project__meta">
+              <span class="project__status project__status--ongoing">Ongoing</span>
+              <div class="project__tags">
+                <span>Python</span><span>NASA Data</span><span>Statistical Modeling</span><span>EDA</span>
+              </div>
+            </div>
+            <h3 class="project__title">ArcheoVeda — Astronomical Data Science</h3>
+            <p class="project__desc">Analyzing NASA datasets using temporal analysis and statistical modeling to
+              evaluate historical astronomical frameworks against modern observational data.</p>
+            <p class="project__impact"><strong>Research-grade analysis</strong> comparing ancient predictive models with
+              contemporary datasets.</p>
+          </div>
+        </article>
+
+        <article class="project reveal-up" id="project-yogabhyas">
+          <div class="project__index">04</div>
+          <div class="project__content">
+            <div class="project__meta">
+              <span class="project__status project__status--completed">Completed</span>
+              <div class="project__tags">
+                <span>Web Analytics</span><span>SEO</span><span>Dashboard Design</span><span>A/B Testing</span>
+              </div>
+            </div>
+            <h3 class="project__title">The Yogabhyas — Analytics-Driven Optimization</h3>
+            <p class="project__desc">Designed data analytics dashboards tracking user engagement metrics and ran
+              structured optimization experiments on a wellness platform.</p>
+            <p class="project__impact"><strong>22% improvement</strong> in website conversion rate through data-driven
+              optimization.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       LEADERSHIP + ACHIEVEMENTS
+       ═══════════════════════════════════════════════════════ -->
+  <section class="section section--leadership" id="leadership" aria-label="Leadership and Achievements">
+    <div class="container">
+      <span class="section__label">05 — Impact</span>
+      <h2 class="section__title split-text">I don't just participate.</h2>
+
+      <div class="leadership__body">
+        <p class="leadership__statement reveal-up">
+          Leading a student chapter isn't about the title, it's about <em>execution at scale</em>. From securing
+          sponsorships and managing logistics to curating technical content and rallying a team, I've learned that
+          leadership is infrastructure. You build the system, and the community drives itself. Every event I've
+          organized has been a lesson in <em>planning under uncertainty</em>, communicating across stakeholders, and
+          delivering experiences that people remember.
+        </p>
+
+        <div class="leadership__grid">
+          <div class="leadership__role reveal-up">
+            <h3>Chairperson</h3>
+            <p class="leadership__org">UPES ACM Student Chapter</p>
+            <p>Leading chapter strategy, team coordination, event planning, and industry partnerships. Building a
+              culture of technical excellence and community ownership.</p>
+          </div>
+
+          <div class="leadership__events reveal-up">
+            <h3>Events Organized</h3>
+            <div class="leadership__event-list">
+              <div class="event-tag">ICMLDE 3.0</div>
+              <div class="event-tag">ICACSDF'25</div>
+              <div class="event-tag">Lady Ada'25</div>
+              <div class="event-tag">GGJ'25</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Achievements -->
+        <div class="achievements reveal-up">
+          <h3 class="achievements__title">Milestones</h3>
+          <div class="achievements__grid">
+            <div class="achievement">
+              <span class="achievement__icon">◆</span>
+              <div>
+                <strong>ICPC Regional Qualifier</strong>
+                <p>North Region — competitive programming under pressure</p>
+              </div>
+            </div>
+            <div class="achievement">
+              <span class="achievement__icon">◆</span>
+              <div>
+                <strong>OpenAI Workbench 3.7</strong>
+                <p>Selected as Testing Team Member</p>
+              </div>
+            </div>
+            <div class="achievement">
+              <span class="achievement__icon">◆</span>
+              <div>
+                <strong>ACM Chapter Chair</strong>
+                <p>Elected to highest student leadership role</p>
+              </div>
+            </div>
+            <div class="achievement">
+              <span class="achievement__icon">◆</span>
+              <div>
+                <strong>35% Automation Impact</strong>
+                <p>Ericsson reporting pipeline transformation</p>
+              </div>
+            </div>
+          </div>
+          <em class="leadership__body">Shall I list all here...? cmon. I'll add all, Promise!</em>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       CONTACT
+       ═══════════════════════════════════════════════════════ -->
+  <section class="section section--contact" id="contact" aria-label="Contact">
+    <div class="container">
+      <span class="section__label">06 — Contact</span>
+
+      <h2 class="contact__title split-text">Let's build something that matters.</h2>
+
+      <p class="contact__desc reveal-up">
+        I'm always open to conversations about data, technology, collaboration, or just good ideas. If something here
+        resonated, just reach out. The best opportunities start with a simple message.
+      </p>
+
+      <div class="contact__links reveal-up">
+        <a href="mailto:khannasangam@gmail.com" class="contact__link magnetic" id="contact-email">
+          <span class="contact__link-label">Email</span>
+          <span class="contact__link-value">khannasangam@gmail.com</span>
+        </a>
+        <a href="https://linkedin.com/in/khannasangam" target="_blank" rel="noopener" class="contact__link magnetic"
+          id="contact-linkedin">
+          <span class="contact__link-label">LinkedIn</span>
+          <span class="contact__link-value">in/khannasangam</span>
+        </a>
+        <a href="https://github.com/khannasangam" target="_blank" rel="noopener" class="contact__link magnetic"
+          id="contact-github">
+          <span class="contact__link-label">GitHub</span>
+          <span class="contact__link-value">khannasangam</span>
+        </a>
+      </div>
+
+      <footer class="footer reveal-up">
+        <p>Designed &amp; crafted by Sangam Khanna · 2025</p>
+      </footer>
+    </div>
+  </section>
+
+  <!-- ═══ SCRIPTS ═══ -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+  <script src="./script.js"></script>
+</body>
+
+</html>
