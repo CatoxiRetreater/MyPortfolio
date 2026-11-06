@@ -1,0 +1,844 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Goa '26 Planner</title>
+<meta name="theme-color" content="#F5F3EE">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F5F3EE;--bg2:#EEEBE4;--card:#FFFFFF;--card2:#F6F4EF;--line:#E5E1D8;--line2:#EFECE6;
+  --text:#1D1C1A;--muted:#6E695F;--dim:#A6A196;
+  --acc:#2F5D57;--acc-soft:#E3ECE9;--warn:#A8742F;--warn-soft:#F4EBDD;--red:#A6493B;--red-soft:#F5E4E0;--green:#3F7454;--green-soft:#E4EEE7;--blue:#3E6383;--blue-soft:#E3EAF1;
+  --shadow:0 1px 2px rgba(29,28,26,.04),0 4px 16px -8px rgba(29,28,26,.08);
+  --r:14px;--rs:10px;
+  --display:'Instrument Serif',Georgia,'Times New Roman',serif;
+  --body:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#131312;--bg2:#1A1A18;--card:#1C1C1A;--card2:#222220;--line:#2D2C29;--line2:#262523;
+  --text:#ECE9E2;--muted:#9D988D;--dim:#6B675F;
+  --acc:#8FBDB4;--acc-soft:#22302D;--warn:#D3A564;--warn-soft:#2E281F;--red:#D98C7E;--red-soft:#2F2220;--green:#8DBE9C;--green-soft:#212C24;--blue:#93B3CF;--blue-soft:#20272F;
+  --shadow:none;color-scheme:dark;
+}}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--text);font-family:var(--body);font-size:14.5px;line-height:1.55;min-height:100vh;font-feature-settings:"cv11","ss01";-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+a{color:inherit}
+svg.i{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex:none}
+input,select,textarea{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 10px;width:100%;outline:none;transition:border-color .15s,box-shadow .15s}
+input:focus,select:focus,textarea:focus{border-color:var(--acc);box-shadow:0 0 0 3px var(--acc-soft)}
+input[type=checkbox]{width:18px;height:18px;accent-color:var(--acc);flex:none;cursor:pointer}
+select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 15px) 50%,calc(100% - 10px) 50%;background-size:5px 5px;background-repeat:no-repeat;padding-right:28px}
+textarea{resize:vertical;min-height:70px}
+label.f{display:block;font-size:11.5px;font-weight:500;color:var(--muted);letter-spacing:.02em;margin-bottom:6px}
+
+/* shell */
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top-in{max-width:1080px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:16px}
+.brand{font-family:var(--display);font-size:26px;letter-spacing:-.01em;white-space:nowrap;line-height:1}
+.brand b{font-weight:400;font-style:italic;color:var(--acc)}
+.nav{display:flex;gap:2px;margin-left:auto}
+.nav button{padding:7px 12px;border-radius:8px;color:var(--muted);font-weight:500;font-size:13.5px;display:flex;align-items:center;gap:7px;transition:.15s}
+.nav button:hover{color:var(--text);background:var(--bg2)}
+.nav button.on{color:var(--text);background:var(--card);box-shadow:inset 0 0 0 1px var(--line)}
+.nav svg.i{width:16px;height:16px}
+main{max-width:1080px;margin:0 auto;padding:32px 20px 110px}
+@media(max-width:760px){
+  .top{backdrop-filter:none;-webkit-backdrop-filter:none;background:var(--bg)}
+  .nav{position:fixed;left:0;right:0;bottom:0;margin:0;justify-content:space-around;background:var(--card);border-top:1px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom));z-index:30}
+  .nav button{flex-direction:column;gap:3px;font-size:10.5px;padding:6px 8px}
+  .nav svg.i{width:20px;height:20px}
+  .nav button.on{background:transparent;box-shadow:none;color:var(--acc)}
+  main{padding:22px 16px 110px}
+}
+
+/* generic */
+h1,h2{font-family:var(--display);font-weight:400;letter-spacing:-.01em;line-height:1.05}
+h2{font-size:34px}
+h3{font-size:15px;font-weight:600;letter-spacing:-.005em}
+.sub{color:var(--muted);font-size:13.5px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.sp{flex:1}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+@media(max-width:420px){.g4{grid-template-columns:1fr 1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:var(--shadow)}
+.card.flat{background:transparent;box-shadow:none;border-style:dashed}
+.sec-h{display:flex;align-items:flex-end;gap:12px;margin:0 0 22px;flex-wrap:wrap}
+.sec-h .sub{margin-top:4px}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border-radius:8px;font-weight:500;font-size:13.5px;background:var(--card);border:1px solid var(--line);transition:.15s;white-space:nowrap;text-decoration:none}
+.btn:hover{border-color:var(--dim)}
+.btn.pri{background:var(--text);border-color:var(--text);color:var(--bg)}
+.btn.pri:hover{opacity:.88}
+.btn.sm{padding:6px 11px;font-size:13px}
+.btn.ghost{background:transparent;border-color:transparent;color:var(--muted)}
+.btn.ghost:hover{color:var(--text);background:var(--bg2)}
+.btn.danger{color:var(--red)}
+.icon-btn{width:30px;height:30px;border-radius:8px;display:inline-grid;place-items:center;color:var(--dim);flex:none;font-size:13px}
+.icon-btn:hover{background:var(--bg2);color:var(--text)}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:2px 9px;border-radius:6px;font-size:12px;font-weight:500;background:var(--bg2);color:var(--muted);white-space:nowrap}
+.cdot{width:7px;height:7px;border-radius:50%;display:inline-block;flex:none}
+.seg{display:inline-flex;background:var(--bg2);border-radius:9px;padding:3px;gap:2px;flex-wrap:wrap}
+.seg button{padding:6px 13px;border-radius:7px;font-weight:500;font-size:13px;color:var(--muted)}
+.seg button.on{background:var(--card);color:var(--text);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.meter{height:4px;border-radius:99px;background:var(--bg2);overflow:hidden}
+.meter i{display:block;height:100%;border-radius:99px;background:var(--acc);transition:width .4s}
+.meter.warn i{background:var(--warn)}
+.meter.bad i{background:var(--red)}
+.empty{text-align:center;color:var(--muted);padding:40px 16px;border:1px dashed var(--line);border-radius:var(--r)}
+.empty .e{display:none}
+.num{font-weight:600;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.pos{color:var(--green)}.neg{color:var(--red)}
+.mt{margin-top:14px}.mt2{margin-top:24px}.mb{margin-bottom:14px}
+
+/* hero */
+.hero{position:relative;border-radius:18px;padding:34px 32px 30px;overflow:hidden;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow)}
+.hero .waves{position:absolute;right:-20px;bottom:0;width:60%;height:90px;opacity:.9;pointer-events:none}
+.hero .waves path{fill:none;stroke:var(--line);stroke-width:1.2}
+.hero-kick{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.hero h1{font-size:clamp(48px,9vw,76px);margin:8px 0 6px}
+.hero h1 em{color:var(--acc)}
+.hero .meta{color:var(--muted)}
+.cd{display:flex;gap:28px;margin-top:26px;flex-wrap:wrap;position:relative}
+.cd div{min-width:52px}
+.cd b{display:block;font-family:var(--display);font-weight:400;font-size:42px;line-height:1;font-variant-numeric:tabular-nums}
+.cd span{font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--muted)}
+.stat .k{font-size:12px;color:var(--muted);font-weight:500}
+.stat .v{font-size:26px;font-weight:600;margin:6px 0 10px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.stat .s{font-size:12.5px;color:var(--muted)}
+.crew{display:flex;flex-wrap:wrap;gap:8px}
+.av{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-weight:600;font-size:12px;color:#2A2823;flex:none}
+.crew-chip{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:999px;padding:3px 12px 3px 3px;font-weight:500;font-size:13.5px}
+
+/* plan */
+.days{display:flex;gap:6px;overflow-x:auto;padding:2px 0 10px;scrollbar-width:none;scroll-snap-type:x mandatory}
+.days::-webkit-scrollbar{display:none}
+.day-pill{flex:none;scroll-snap-align:start;min-width:78px;text-align:left;padding:9px 13px;border-radius:10px;border:1px solid var(--line);background:var(--card);transition:.15s}
+.day-pill:hover{border-color:var(--dim)}
+.day-pill .dw{font-size:10.5px;font-weight:500;letter-spacing:.12em;color:var(--muted)}
+.day-pill .dn{font-family:var(--display);font-size:26px;line-height:1.05}
+.day-pill .dc{font-size:11px;color:var(--dim)}
+.day-pill.on{background:var(--text);border-color:var(--text);color:var(--bg)}
+.day-pill.on .dw,.day-pill.on .dc{color:color-mix(in srgb,var(--bg) 70%,transparent)}
+.day-head{display:flex;gap:20px;align-items:center;flex-wrap:wrap;margin:18px 0 22px;padding-bottom:20px;border-bottom:1px solid var(--line)}
+.day-big{font-family:var(--display);font-size:72px;line-height:.85;color:var(--text)}
+.day-title{font-family:var(--display);font-size:28px;background:transparent;border:1px solid transparent;padding:0 6px;margin-left:-7px;border-radius:6px;width:auto;min-width:220px;max-width:100%}
+.day-title:hover{border-color:var(--line)}
+textarea.day-title{resize:none;overflow:hidden;min-height:0;line-height:1.15;width:100%;display:block;field-sizing:content}
+.tl{position:relative;padding-left:24px}
+.tl::before{content:"";position:absolute;left:5px;top:10px;bottom:10px;width:1px;background:var(--line)}
+.ev{position:relative;margin-bottom:10px}
+.ev .dot{position:absolute;left:-23px;top:22px;width:9px;height:9px;border-radius:50%;box-shadow:0 0 0 4px var(--bg)}
+.ev-card{display:grid;grid-template-columns:84px 1fr auto;gap:16px;align-items:start;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;cursor:pointer;transition:border-color .15s,box-shadow .15s;box-shadow:var(--shadow)}
+.ev-card:hover{border-color:var(--dim)}
+.ev-time{font-weight:600;font-size:14px;color:var(--text);line-height:1.3;font-variant-numeric:tabular-nums}
+.ev-time small{display:block;font-size:12px;color:var(--muted);font-weight:400}
+.ev-t{font-weight:600;font-size:15.5px;color:var(--text);line-height:1.35}
+.ev-p{font-size:13px;color:var(--muted);margin-top:4px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.ev-p a{color:var(--acc);text-decoration:none}
+.ev-p a:hover{text-decoration:underline}
+.ev-n{font-size:13px;color:var(--muted);margin-top:8px;white-space:pre-wrap;line-height:1.5}
+.ev-r{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.st-booked{background:var(--green-soft);color:var(--green)}
+.st-planned{background:var(--blue-soft);color:var(--blue)}
+.st-idea{background:var(--warn-soft);color:var(--warn)}
+@media(max-width:560px){.ev-card{grid-template-columns:1fr auto;gap:10px;padding:14px}.ev-time{grid-column:1/-1;display:flex;gap:6px;align-items:baseline}.ev-time small{display:inline}.ev-time small::before{content:"· "}.day-big{font-size:56px}.day-title{font-size:24px}}
+.full{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+.full .col{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow)}
+.full .col-h{padding:14px 16px 12px;border-bottom:1px solid var(--line)}
+.full .col-h .num{font-family:var(--display);font-weight:400;font-size:24px}
+.full .it{display:flex;gap:10px;align-items:baseline;padding:9px 16px;border-bottom:1px solid var(--line2);cursor:pointer;font-size:13.5px}
+.full .it:hover{background:var(--card2)}
+.full .it:last-child{border-bottom:0}
+.full .it .tm{min-width:52px;color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
+
+/* tables */
+.tbl{width:100%;border-collapse:separate;border-spacing:0}
+.tbl th{text-align:left;font-size:12px;color:var(--muted);font-weight:500;padding:8px;border-bottom:1px solid var(--line)}
+.tbl td{padding:6px 8px;border-bottom:1px solid var(--line2);vertical-align:middle;font-variant-numeric:tabular-nums}
+.tbl input{padding:6px 9px;border-color:transparent;background:transparent}
+.tbl input:hover{border-color:var(--line)}
+.tbl input:focus{background:var(--card);border-color:var(--acc)}
+.tbl .n{text-align:right}
+.tbl input.n{max-width:110px;margin-left:auto;display:block}
+.tbl tfoot td{font-weight:600;border-bottom:0;padding-top:14px}
+.tbl .ic-col{display:none}
+.scroll-x{overflow-x:auto;margin:0 -4px;padding:0 4px}
+.mini-bar{height:4px;border-radius:9px;background:var(--bg2);overflow:hidden;min-width:70px}
+.mini-bar i{display:block;height:100%;background:var(--acc)}
+.mini-bar.over i{background:var(--red)}
+@media(max-width:640px){
+  .btbl thead,.btbl tfoot{display:none}
+  .btbl tbody tr{display:grid;grid-template-columns:1fr 1fr 30px;gap:6px 8px;padding:12px 0;border-bottom:1px solid var(--line2)}
+  .btbl td{border:0;padding:0}
+  .btbl td:nth-child(2){grid-column:1/3;grid-row:1}
+  .btbl td:nth-child(7){grid-column:3;grid-row:1}
+  .btbl td:nth-child(3){grid-column:1;grid-row:2}
+  .btbl td:nth-child(4){grid-column:2;grid-row:2}
+  .btbl td:nth-child(5){grid-column:1;grid-row:3;text-align:left;font-size:12.5px}
+  .btbl td:nth-child(6){grid-column:2/4;grid-row:3;align-self:center}
+  .btbl td[data-l]::before{content:attr(data-l);display:block;font-size:11px;color:var(--muted);margin:0 0 2px 9px}
+  .btbl td:nth-child(2) input{font-weight:600}
+  .btbl input.n{max-width:none;text-align:left;margin:0}
+}
+
+/* lists */
+.check{display:flex;align-items:center;gap:12px;padding:10px 2px;border-bottom:1px solid var(--line2)}
+.check:last-child{border-bottom:0}
+.check.done span.t{color:var(--dim);text-decoration:line-through}
+.check .t{flex:1}
+.check select{width:auto;padding:5px 26px 5px 9px;font-size:13px}
+.add-line{display:flex;gap:8px;margin-top:12px}
+.add-line input{flex:1}
+.bk{display:grid;gap:12px}
+.bk-top{display:flex;gap:10px;align-items:center}
+.bk-top input.name{font-weight:600;font-size:15px;background:transparent;border-color:transparent;padding:4px 6px;margin-left:-7px}
+.bk-top input.name:hover{border-color:var(--line)}
+.bk-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.bk-grid label{font-size:11.5px;color:var(--muted);display:block;margin-bottom:4px}
+
+/* guide */
+.idea{display:flex;flex-direction:column;gap:8px}
+.idea h3{font-family:var(--display);font-weight:400;font-size:23px;letter-spacing:-.005em;line-height:1.15}
+.idea p{color:var(--muted);font-size:13.5px;flex:1}
+.idea .price{font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.rule{display:flex;gap:18px}
+.rule .ic{font-family:var(--display);font-size:30px;line-height:1;color:var(--dim);flex:none;width:36px}
+.rule h3{font-size:15.5px}
+.rule p{color:var(--muted);font-size:13.5px;margin-top:4px}
+.rule ul{color:var(--muted);font-size:13.5px;margin:8px 0 0 16px}
+.rule li{margin-bottom:3px}
+.contact{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line2)}
+.contact:last-child{border-bottom:0}
+.contact .ci{display:none}
+.call{border:1px solid var(--line);color:var(--acc);border-radius:8px;padding:6px 13px;font-weight:500;font-size:13px;text-decoration:none;white-space:nowrap}
+.call:hover{border-color:var(--acc)}
+@media(max-width:560px){.ct-f{grid-template-columns:1fr!important}}
+
+/* modal */
+.ov{position:fixed;inset:0;background:rgba(20,19,17,.4);backdrop-filter:blur(2px);z-index:50;display:none;align-items:flex-end;justify-content:center}
+.ov.open{display:flex}
+.modal{background:var(--card);border:1px solid var(--line);border-radius:18px 18px 0 0;width:100%;max-width:540px;max-height:92vh;overflow:auto;padding:24px 22px calc(22px + env(safe-area-inset-bottom));animation:up .2s ease;box-shadow:0 20px 60px -20px rgba(0,0,0,.35)}
+.modal h2{font-size:28px!important}
+@media(min-width:640px){.ov{align-items:center;padding:20px}.modal{border-radius:18px}}
+@keyframes up{from{transform:translateY(16px);opacity:0}to{transform:none;opacity:1}}
+.cats{display:flex;flex-wrap:wrap;gap:6px}
+.cats button{display:inline-flex;align-items:center;gap:7px;padding:6px 11px;border-radius:8px;border:1px solid var(--line);font-size:13px;font-weight:500;color:var(--muted);background:var(--card)}
+.cats button.on{color:var(--text);border-color:var(--text);background:var(--card2)!important}
+#x-split button.on{background:var(--text)!important;color:var(--bg);border-color:var(--text)}
+.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%) translateY(12px);background:var(--text);color:var(--bg);padding:9px 16px;border-radius:9px;font-weight:500;font-size:13.5px;opacity:0;transition:.25s;z-index:60;pointer-events:none;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%)}
+
+/* print */
+@media print{
+  :root{--bg:#fff;--card:#fff;--line:#ddd;--text:#111;--muted:#555}
+  .top,.no-print,.ov,.toast{display:none!important}
+  main{padding:0;max-width:none}
+  .full{grid-template-columns:repeat(2,1fr)}
+  .full .col,.card{box-shadow:none;break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <div class="brand">Goa <b>'26</b></div>
+    <nav class="nav" id="nav"></nav>
+  </div>
+</header>
+<main id="app"></main>
+<div class="ov" id="ov"><div class="modal" id="modal"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ===== helpers ===== */
+const $ = (s, r = document) => r.querySelector(s);
+const uid = () => Math.random().toString(36).slice(2, 9);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const inr = n => (n < 0 ? '-' : '') + '₹' + Math.round(Math.abs(n || 0)).toLocaleString('en-IN');
+const num = v => { const n = parseFloat(v); return isFinite(n) ? n : 0; };
+const KEY = 'goa26-planner-v1';
+const COLORS = ['#D9C7AE','#B9CFC8','#C3CDDD','#E0C3B8','#CBC2DA','#D2D6B5','#C9D9E3','#E3D3C0'];
+
+const CATS = {
+  travel:  {l:'Travel',   i:'🚆', c:'#7C8AA5'},
+  stay:    {l:'Stay',     i:'🏡', c:'#5E8F87'},
+  food:    {l:'Food',     i:'🍤', c:'#C49A55'},
+  beach:   {l:'Beach',    i:'🏖️', c:'#5E95B8'},
+  explore: {l:'Explore',  i:'🧭', c:'#7E9C6B'},
+  activity:{l:'Activity', i:'🌊', c:'#C27A5E'},
+  party:   {l:'Party',    i:'🪩', c:'#9C6F8E'},
+  chill:   {l:'Chill',    i:'🌴', c:'#A8A296'}
+};
+const STATUS = {idea:'Idea', planned:'Planned', booked:'Booked'};
+const mapUrl = q => 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q + ', Goa');
+
+/* ===== default data ===== */
+function defaults() {
+  const crew = ['Sangam','Boy 2','Boy 3','Boy 4','Boy 5','Boy 6'].map((n, i) => ({id: uid(), name: n, color: COLORS[i]}));
+  const E = (date, time, title, cat, o = {}) => ({id: uid(), date, time, end: o.end || '', title, cat, place: o.place || '', cost: o.cost || 0, status: o.status || 'planned', notes: o.notes || ''});
+  return {
+    v: 1,
+    tab: 'home', planDay: '2026-12-22', planMode: 'day', moneyTab: 'budget', listTab: 'packing', guideTab: 'explore', guideFilter: 'all',
+    trip: {name: "Goa '26", sub: 'The Boys', start: '2026-12-21', end: '2026-12-28', depart: '2026-12-21T09:00', cap: 40000, stay: 'Amoret Homes, Chicalim'},
+    crew, me: crew[0].id,
+    days: {
+      '2026-12-21': 'Wheels up (well, rails)',
+      '2026-12-22': 'Touchdown + Bogmalo sunset',
+      '2026-12-23': 'Jungle day: Dudhsagar',
+      '2026-12-24': 'Heritage by day, Christmas Eve by night',
+      '2026-12-25': 'Deep south: Agonda to Palolem',
+      '2026-12-26': 'Water sports + farewell night',
+      '2026-12-27': 'Checkout + train home',
+      '2026-12-28': 'Back in Delhi'
+    },
+    events: [
+      E('2026-12-21','09:00','Board train: Delhi to Goa','travel',{status:'booked',cost:2200,notes:'Update the exact time + PNR in Lists > Bookings. Lock the bags.'}),
+      E('2026-12-22','14:00','Arrive in Goa','travel',{status:'booked',place:'Vasco da Gama station',notes:'Afternoon arrival. Grab a GoaMiles cab or pre-booked transfer.'}),
+      E('2026-12-22','15:00','Check in: Amoret Homes','stay',{status:'booked',place:'Amoret Homes Chicalim',notes:'Check-in from 2 PM. Pay the remaining Airbnb half if due.'}),
+      E('2026-12-22','16:00','Pick up 3 scooters','travel',{place:'Chicalim',cost:600,notes:'Licensed rent-a-bike only (black plate, yellow text). Photograph every scratch. Carry DL.'}),
+      E('2026-12-22','17:30','Sunset at Bogmalo Beach','beach',{place:'Bogmalo Beach',notes:'10 min from the stay. Small, calm, pretty.'}),
+      E('2026-12-22','20:00','Seafood dinner, Bogmalo shack','food',{place:'Bogmalo Beach',cost:600}),
+      E('2026-12-23','07:00','Leave for Dudhsagar','travel',{place:'Collem',notes:'~1.5 hr ride. Leave early, jeep queues build fast.'}),
+      E('2026-12-23','09:00','Dudhsagar Falls jeep safari','activity',{place:'Dudhsagar Falls jeep counter Collem',cost:800,notes:'Jeep is shared by the group. Carry cash + water.'}),
+      E('2026-12-23','14:30','Tambdi Surla temple','explore',{place:'Tambdi Surla Mahadev Temple',notes:'12th century stone temple in the forest.'}),
+      E('2026-12-23','20:00','Shack night: Colva / Benaulim','food',{place:'Benaulim Beach',cost:700,notes:'Live music shacks. Easy night before Christmas Eve.'}),
+      E('2026-12-24','10:00','Old Goa: Basilica of Bom Jesus + Se Cathedral','explore',{place:'Basilica of Bom Jesus',notes:'Dress decently. Christmas decor everywhere.'}),
+      E('2026-12-24','12:30','Fontainhas walk + lunch in Panjim','explore',{place:'Fontainhas Panaji',cost:500,notes:'Latin quarter. Colourful lanes, great photos.'}),
+      E('2026-12-24','17:30','Mandovi sunset cruise','activity',{place:'Santa Monica Jetty Panaji',cost:500}),
+      E('2026-12-24','22:00','Christmas Eve: Tito\'s Lane, Baga','party',{place:'Titos Lane Baga',cost:2500,status:'idea',notes:'Pre-book stag entry. Cab both ways, no scooters.'}),
+      E('2026-12-25','11:00','Slow brunch + recover','chill',{cost:300}),
+      E('2026-12-25','13:00','Cabo de Rama Fort','explore',{place:'Cabo de Rama Fort',notes:'Cliff fort with sea views. Hidden beach below.'}),
+      E('2026-12-25','15:00','Agonda Beach','beach',{place:'Agonda Beach'}),
+      E('2026-12-25','16:30','Palolem + boat to Butterfly Beach','activity',{place:'Palolem Beach',cost:400,notes:'Fix the boat price before boarding.'}),
+      E('2026-12-25','20:00','Christmas dinner, Palolem','food',{place:'Palolem Beach',cost:800}),
+      E('2026-12-26','10:00','Water sports combo','activity',{place:'Bogmalo Beach',cost:2000,notes:'Parasailing, jet ski, banana. Check life jackets, fix price upfront.'}),
+      E('2026-12-26','13:30','Margao market + Goan thali','food',{place:'Margao Municipal Market',cost:400}),
+      E('2026-12-26','16:00','Menezes Braganza House, Chandor','explore',{place:'Braganza House Chandor',status:'idea'}),
+      E('2026-12-26','21:00','Farewell night: Silent Noise (Sat only)','party',{place:'Palolem Beach',cost:1000,status:'idea',notes:'Confirm venue + date. Back by ~1 AM if train is early.'}),
+      E('2026-12-26','23:59','Pack everything','chill'),
+      E('2026-12-27','08:00','Checkout + morning train','travel',{status:'booked',notes:'Update exact time. Checkout is 11 AM but train is earlier.'}),
+      E('2026-12-28','12:00','Reach Delhi','travel',{status:'booked'})
+    ],
+    budget: [
+      {id: uid(), icon:'🚆', name:'Delhi to Goa train', planned:2200, paid:2200},
+      {id: uid(), icon:'🚆', name:'Goa to Delhi train', planned:4080, paid:1080},
+      {id: uid(), icon:'🏡', name:'Airbnb, 5 nights', planned:6650, paid:3325},
+      {id: uid(), icon:'🛵', name:'Scooters, fuel, cabs', planned:3500, paid:0},
+      {id: uid(), icon:'🍤', name:'Food & cafes', planned:5000, paid:0},
+      {id: uid(), icon:'🍺', name:'Drinks', planned:3000, paid:0},
+      {id: uid(), icon:'🪩', name:'Club entries', planned:4000, paid:0},
+      {id: uid(), icon:'🌊', name:'Activities', planned:3000, paid:0},
+      {id: uid(), icon:'🚕', name:'Station transfers', planned:600, paid:0},
+      {id: uid(), icon:'🛍️', name:'Misc / shopping', planned:700, paid:0},
+      {id: uid(), icon:'🧯', name:'Buffer', planned:3000, paid:0}
+    ],
+    expenses: [],
+    packing: [
+      ['Documents','Original govt photo ID (clubs check)'],['Documents','Driving licence (for scooters)'],['Documents','DigiLocker set up on phone'],['Documents','Train tickets / PNR saved offline'],['Documents','₹2,000 to 3,000 cash'],['Documents','Backup debit card'],
+      ['Clothes','2 club outfits + closed shoes'],['Clothes','Christmas Eve fit'],['Clothes','Beach shorts x3'],['Clothes','T-shirts / shirts x6'],['Clothes','Light jacket (AC train)'],['Clothes','Sleepwear + innerwear'],
+      ['Beach','Sunscreen SPF 50'],['Beach','Sunglasses + cap'],['Beach','Flip-flops'],['Beach','Quick-dry towel'],['Beach','Waterproof phone pouch'],
+      ['Tech','Phone charger'],['Tech','Power bank'],['Tech','Earphones'],
+      ['Health','Personal meds'],['Health','ORS / electrolyte sachets'],['Health','Antacid + painkiller'],['Health','Mosquito repellent'],['Health','Band-aids'],
+      ['Train','Snacks for 30+ hrs'],['Train','Chain lock for luggage'],['Train','Water bottle'],['Train','Neck pillow']
+    ].map(([g, t]) => ({id: uid(), group: g, text: t, done: {}})),
+    gear: ['Bluetooth speaker','Playing cards / UNO','Extra power bank','First-aid kit','Extension board','GoPro / camera','Ziplock bags','Garbage bags (leave no trace)'].map(t => ({id: uid(), text: t, who: '', done: false})),
+    bookings: [
+      {id: uid(), name:'Train: Delhi to Goa', ref:'', status:'done', due:0, date:'2026-12-21', contact:'', notes:'Fully paid'},
+      {id: uid(), name:'Train: Goa to Delhi', ref:'', status:'partial', due:3000, date:'2026-12-27', contact:'', notes:'₹1,080 paid per person'},
+      {id: uid(), name:'Airbnb: Amoret Homes', ref:'', status:'partial', due:3325, date:'2026-12-22', contact:'', notes:'Half paid. Check-in 2 PM, checkout 11 AM'},
+      {id: uid(), name:'3 scooters (5 days)', ref:'', status:'todo', due:0, date:'2026-12-22', contact:'', notes:'Book in advance for Christmas week'},
+      {id: uid(), name:'Tito\'s Christmas Eve entry', ref:'', status:'todo', due:2500, date:'2026-12-24', contact:'+91 96575 70428', notes:'titosgoa.com. Ask about stag group policy'},
+      {id: uid(), name:'Mandovi cruise', ref:'', status:'todo', due:500, date:'2026-12-24', contact:'', notes:''},
+      {id: uid(), name:'Water sports combo', ref:'', status:'todo', due:2000, date:'2026-12-26', contact:'', notes:'Fix price before'}
+    ],
+    contacts: [
+      {id: uid(), icon:'🚨', name:'National emergency', num:'112', note:'Police, fire, ambulance'},
+      {id: uid(), icon:'🚑', name:'Ambulance', num:'108', note:''},
+      {id: uid(), icon:'ℹ️', name:'India tourist helpline', num:'1363', note:'24x7, multilingual'},
+      {id: uid(), icon:'🚕', name:'GoaMiles (official taxi app)', num:'', note:'Install before the trip'},
+      {id: uid(), icon:'🪩', name:'Tito\'s Goa', num:'+91 96575 70428', note:'info@titosgoa.com'},
+      {id: uid(), icon:'🎟️', name:'GoBananas (club passes)', num:'+91 63551 02840', note:'Alt: +91 87580 39485'},
+      {id: uid(), icon:'🏡', name:'Airbnb host', num:'', note:'Add number'},
+      {id: uid(), icon:'🛵', name:'Scooter rental', num:'', note:'Add number'}
+    ]
+  };
+}
+
+const IDEAS = [
+  {r:'south',cat:'beach',t:'Butterfly Beach',p:'Butterfly Beach Canacona',c:400,n:'Boat from Palolem. Tiny cove, dolphins sometimes on the way.'},
+  {r:'south',cat:'beach',t:'Cola Beach lagoon',p:'Cola Beach',c:0,n:'Freshwater lagoon meets the sea. Rough road, worth it.'},
+  {r:'south',cat:'explore',t:'Cabo de Rama Fort',p:'Cabo de Rama Fort',c:0,n:'Clifftop fort, huge views, a hidden beach below.'},
+  {r:'south',cat:'beach',t:'Galgibaga Beach',p:'Galgibaga Beach',c:0,n:'Near-empty turtle-nesting beach, casuarina forest. Peak calm.'},
+  {r:'south',cat:'explore',t:'Netravali Bubbling Lake',p:'Netravali Bubbling Lake',c:0,n:'Lake that bubbles when you clap. Pair with a jungle ride.'},
+  {r:'south',cat:'explore',t:'Menezes Braganza House',p:'Braganza House Chandor',c:300,n:'300 year old Portuguese-era mansion. Guided tour.'},
+  {r:'south',cat:'beach',t:'Bogmalo Beach',p:'Bogmalo Beach',c:0,n:'Closest beach to the stay. Water sports + shacks.'},
+  {r:'south',cat:'food',t:'Martin\'s Corner',p:'Martins Corner Betalbatim',c:900,n:'Iconic Goan restaurant, live music. Book a table.'},
+  {r:'south',cat:'food',t:'Fisherman\'s Wharf, Cavelossim',p:'Fishermans Wharf Cavelossim',c:900,n:'Riverside Goan seafood, big group friendly.'},
+  {r:'south',cat:'activity',t:'Kayaking at Palolem',p:'Palolem Beach',c:500,n:'Calm bay, easy for first timers. Early morning is best.'},
+  {r:'north',cat:'explore',t:'Divar Island ferry',p:'Old Goa ferry Divar',c:0,n:'Free ferry ride to a sleepy island village. Scooters go on board.'},
+  {r:'north',cat:'explore',t:'Chapora Fort sunset',p:'Chapora Fort',c:0,n:'The Dil Chahta Hai fort. Arrive 45 min before sunset.'},
+  {r:'north',cat:'activity',t:'Grande Island boat + snorkel',p:'Grande Island Goa',c:1500,n:'Full-day boat with snorkelling, dolphins and lunch.'},
+  {r:'north',cat:'explore',t:'Spice plantation, Ponda',p:'Sahakari Spice Farm Ponda',c:500,n:'Tour + Goan buffet lunch. Good on the way to Dudhsagar.'},
+  {r:'north',cat:'explore',t:'Anjuna Flea Market (Wed)',p:'Anjuna Flea Market',c:500,n:'Wednesdays only. Shopping, food, hippie vibes.'},
+  {r:'north',cat:'party',t:'Arpora Saturday Night Market',p:'Saturday Night Market Arpora',c:500,n:'Saturdays only. Live music, food stalls, shopping.'},
+  {r:'night',cat:'party',t:'Tito\'s / Cafe Mambo, Baga',p:'Titos Lane Baga',c:2500,n:'Stag ~₹2,500 to 3,000 incl. drinks. Pre-book in Christmas week.'},
+  {r:'night',cat:'party',t:'LPK Waterfront, Nerul',p:'LPK Waterfront',c:3000,n:'Cave-style club by the river. Stag ~₹3,000.'},
+  {r:'night',cat:'party',t:'Silent Noise, Palolem',p:'Palolem Beach',c:1000,n:'Headphone party with 3 DJ channels. Saturdays only. Confirm venue.'},
+  {r:'night',cat:'party',t:'Curlies, Anjuna',p:'Curlies Anjuna',c:0,n:'Beach bar, sunset into night. No big cover charge.'},
+  {r:'night',cat:'party',t:'Deltin casino night',p:'Deltin Royale Panaji',c:3500,n:'Offshore casino. Entry includes play chips + buffet. 21+.'},
+  {r:'food',cat:'food',t:'Goan fish thali',p:'Ritz Classic Panaji',c:400,n:'Ritz Classic in Panjim is the famous one. Expect a queue.'},
+  {r:'food',cat:'food',t:'Ros omelette + poi',p:'Margao',c:100,n:'Street food classic. Find a cart in the evening.'},
+  {r:'food',cat:'food',t:'Try the menu',p:'',c:0,n:'Prawn balchao, chicken xacuti, pork vindaloo, bebinca, feni (sip, don\'t chug).'}
+];
+
+const RULES = [
+  {i:'🪩',t:'Clubbing as a stag group',p:'Many clubs restrict all-male groups. Play it smart:',l:['Pre-book via the club\'s own site or a known aggregator','Carry original photo ID, every one of you','Closed shoes + smart casual. Shorts and flip-flops get turned away','Ignore street touts selling "entry passes"']},
+  {i:'🛵',t:'Scooter rules (they do check)',p:'Rent only from licensed rent-a-bike operators (black plate, yellow letters). You sign an undertaking with the rental.',l:['Helmet: ₹1,000 fine + 3 month licence disqualification','No triple seat, same penalty','Drunk riding: ₹10,000 fine and/or jail. Cabs on party nights, always','Photo/video the scooter before you ride off']},
+  {i:'🍺',t:'Drinking in public',p:'Drinking in open public places is treated as a nuisance in Goa, with fines reported at ₹5,000 (Aug 2025). Drink at shacks, bars and the stay. Never leave bottles on the beach.'},
+  {i:'🌊',t:'Sea safety',p:'Goa has drownings every season, mostly avoidable.',l:['Swim only between the flags, near lifeguards','Red flag = no swimming, no exceptions','Never swim drunk or after dark','Currents are stronger than they look']},
+  {i:'🧑‍🤝‍🧑',t:'Buddy system',p:'Six go out, six come back.',l:['Share live location in the group chat every night','Pick a meeting point at every club','One "captain" per night stays sharp and counts heads','Watch your drink, don\'t accept open drinks']},
+  {i:'🚫',t:'Drugs: just don\'t',p:'Possession is a serious NDPS Act offence with tough bail rules, and police run checks in party areas. Not worth a ruined trip or a record.'},
+  {i:'💸',t:'Money sense',p:'Christmas week prices surge everywhere.',l:['Log every shared bill in the Split tab, settle on the last night','Carry cash for shacks, jeeps and boats','Fix prices before water sports, boats and taxis','Keep the buffer untouched until Dec 26']},
+  {i:'☀️',t:'Sun + hangover combo',p:'December sun is still strong. SPF before every beach, ORS after every party night, water in the scooter dicky.'},
+  {i:'🚆',t:'30 hour train survival',p:'Chain-lock bags under the berth, keep phones and wallets on you while sleeping, carry snacks and a power bank, check the chart and PNR the night before.'}
+];
+
+/* ===== state ===== */
+let S;
+function load() {
+  try { const raw = localStorage.getItem(KEY); if (raw) { const d = JSON.parse(raw); if (d && d.v === 1) return Object.assign(defaults(), d); } } catch (e) {}
+  return defaults();
+}
+function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+S = load();
+
+function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('show'), 1800); }
+function tripDates() { const out = []; let d = new Date(S.trip.start + 'T00:00'); const e = new Date(S.trip.end + 'T00:00'); let g = 0; while (d <= e && g++ < 40) { out.push(iso(d)); d.setDate(d.getDate() + 1); } return out; }
+function iso(d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+function dParts(ds) { const d = new Date(ds + 'T00:00'); return {w: d.toLocaleDateString('en-IN', {weekday: 'short'}).toUpperCase(), n: d.getDate(), m: d.toLocaleDateString('en-IN', {month: 'short'}), long: d.toLocaleDateString('en-IN', {weekday: 'long', day: 'numeric', month: 'long'})}; }
+function fmtTime(t) { if (!t) return 'Anytime'; const [h, m] = t.split(':').map(Number); const ap = h >= 12 ? 'PM' : 'AM'; return ((h % 12) || 12) + (m ? ':' + String(m).padStart(2, '0') : '') + ' ' + ap; }
+function evSort(a, b) { return (a.date + (a.time || '99')).localeCompare(b.date + (b.time || '99')); }
+const person = id => S.crew.find(p => p.id === id);
+const pname = id => (person(id) || {name: '?'}).name;
+const avatar = p => `<span class="av" style="background:${p.color}">${esc((p.name || '?').trim()[0] || '?').toUpperCase()}</span>`;
+
+/* ===== computed ===== */
+function budgetTotals() {
+  const planned = S.budget.reduce((s, b) => s + num(b.planned), 0);
+  const paid = S.budget.reduce((s, b) => s + num(b.paid), 0);
+  return {planned, paid, cap: num(S.trip.cap), head: num(S.trip.cap) - planned};
+}
+function spentPP() { const n = S.crew.length || 1; const m = {}; let t = 0; S.expenses.forEach(e => { m[e.cat] = (m[e.cat] || 0) + num(e.amount) / n; t += num(e.amount) / n; }); return {m, t}; }
+function balances() {
+  const b = {}; S.crew.forEach(p => b[p.id] = 0);
+  S.expenses.forEach(e => { const sp = (e.split || []).filter(id => id in b); if (!sp.length) return; if (e.payer in b) b[e.payer] += num(e.amount); const sh = num(e.amount) / sp.length; sp.forEach(id => b[id] -= sh); });
+  return b;
+}
+function settle(b) {
+  const cr = [], db = [];
+  for (const [id, v] of Object.entries(b)) { if (v > 0.5) cr.push([id, v]); else if (v < -0.5) db.push([id, -v]); }
+  cr.sort((x, y) => y[1] - x[1]); db.sort((x, y) => y[1] - x[1]);
+  const out = []; let i = 0, j = 0;
+  while (i < db.length && j < cr.length) { const m = Math.min(db[i][1], cr[j][1]); out.push({from: db[i][0], to: cr[j][0], amt: m}); db[i][1] -= m; cr[j][1] -= m; if (db[i][1] < 0.5) i++; if (cr[j][1] < 0.5) j++; }
+  return out;
+}
+
+/* ===== nav ===== */
+const ICONS = {
+  home: '<path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/>',
+  plan: '<rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/>',
+  money: '<rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18M16 15h2"/>',
+  lists: '<path d="M10 6h10M10 12h10M10 18h10"/><path d="m3.5 6 1.5 1.5L7.5 5M3.5 12l1.5 1.5L7.5 11M3.5 18l1.5 1.5L7.5 17"/>',
+  guide: '<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/>',
+  setup: '<path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/>'
+};
+const ico = k => `<svg class="i" viewBox="0 0 24 24">${ICONS[k]}</svg>`;
+const TABS = [['home','🏠','Home'],['plan','🗓️','Schedule'],['money','💰','Money'],['lists','✅','Lists'],['guide','🧭','Guide'],['setup','⚙️','Setup']];
+function renderNav() { $('#nav').innerHTML = TABS.map(([k, i, l]) => `<button class="${S.tab === k ? 'on' : ''}" data-act="tab" data-v="${k}">${ico(k)}${l}</button>`).join(''); }
+
+/* ===== views ===== */
+function viewHome() {
+  const bt = budgetTotals(), sp = spentPP();
+  const pct = Math.min(100, bt.planned / bt.cap * 100 || 0);
+  const mcls = bt.planned > bt.cap ? 'bad' : pct > 92 ? 'warn' : 'ok';
+  const evs = [...S.events].sort(evSort);
+  const now = new Date();
+  const next = evs.find(e => new Date(e.date + 'T' + (e.time || '00:00')) > now);
+  const booked = evs.filter(e => e.status === 'booked').length;
+  const todo = S.bookings.filter(b => b.status !== 'done');
+  const myDone = S.packing.filter(p => p.done[S.me]).length;
+  const bal = balances();
+  return `
+  <section class="hero">
+    <svg class="waves" viewBox="0 0 600 90" preserveAspectRatio="none"><path d="M0 30 Q75 10 150 30 T300 30 T450 30 T600 30"/><path d="M0 52 Q75 32 150 52 T300 52 T450 52 T600 52"/><path d="M0 74 Q75 54 150 74 T300 74 T450 74 T600 74"/></svg>
+    <div class="hero-kick">${esc(S.trip.sub)} · ${S.crew.length} of us</div>
+    <h1>${esc(S.trip.name)}</h1>
+    <div class="meta">${dParts(S.trip.start).n} to ${dParts(S.trip.end).n} ${dParts(S.trip.end).m} · ${esc(S.trip.stay)}</div>
+    <div class="cd" id="cd"></div>
+  </section>
+
+  <div class="grid g4 mt">
+    <div class="card stat"><div class="k">Planned per head</div><div class="v">${inr(bt.planned)}</div><div class="meter ${mcls}"><i style="width:${pct}%"></i></div><div class="s mt" style="margin-top:8px">${bt.head >= 0 ? inr(bt.head) + ' under' : inr(-bt.head) + ' over'} the ${inr(bt.cap)} cap</div></div>
+    <div class="card stat"><div class="k">Still to pay</div><div class="v">${inr(S.bookings.reduce((s, b) => s + (b.status !== 'done' ? num(b.due) : 0), 0))}</div><div class="s">${todo.length} booking${todo.length === 1 ? '' : 's'} open · ${inr(bt.paid)} already paid</div></div>
+    <div class="card stat"><div class="k">Spent so far</div><div class="v">${inr(sp.t)}</div><div class="s">per head, from ${S.expenses.length} shared bill${S.expenses.length === 1 ? '' : 's'}</div></div>
+    <div class="card stat"><div class="k">Plans</div><div class="v">${S.events.length}</div><div class="s">${booked} booked · ${S.events.filter(e => e.status === 'idea').length} still ideas</div></div>
+  </div>
+
+  <div class="grid g2 mt">
+    <div class="card">
+      <div class="row mb"><h3>Next up</h3><span class="sp"></span><button class="btn sm" data-act="tab" data-v="plan">Full schedule →</button></div>
+      ${next ? evMini(next) : '<div class="sub">Trip\'s done. Hope it was legendary.</div>'}
+      ${next ? evs.filter(e => e.date === next.date && e.id !== next.id && evSort(e, next) > 0).slice(0, 3).map(evMini).join('') : ''}
+    </div>
+    <div class="card">
+      <div class="row mb"><h3>To book / pay</h3><span class="sp"></span><button class="btn sm" data-act="go-list" data-v="bookings">Manage →</button></div>
+      ${todo.length ? todo.map(b => `<div class="check"><span class="chip ${b.status === 'partial' ? 'st-planned' : 'st-idea'}">${b.status === 'partial' ? 'Partial' : 'To do'}</span><span class="t">${esc(b.name)}</span><b>${b.due ? inr(b.due) : ''}</b></div>`).join('') : '<div class="sub">Everything is booked.</div>'}
+    </div>
+  </div>
+
+  <div class="grid g2 mt">
+    <div class="card">
+      <div class="row mb"><h3>The crew</h3><span class="sp"></span><span class="sub">balance from Split</span></div>
+      <div class="crew">${S.crew.map(p => { const v = bal[p.id] || 0; return `<span class="crew-chip">${avatar(p)}${esc(p.name)} <b class="${v > 0.5 ? 'pos' : v < -0.5 ? 'neg' : ''}" style="font-size:13px">${Math.abs(v) < 0.5 ? '' : (v > 0 ? '+' : '') + inr(v)}</b></span>`; }).join('')}</div>
+    </div>
+    <div class="card">
+      <div class="row mb"><h3>Your packing</h3><span class="sp"></span><select style="width:auto" data-act="set-me">${S.crew.map(p => `<option value="${p.id}" ${p.id === S.me ? 'selected' : ''}>${esc(p.name)}</option>`).join('')}</select></div>
+      <div class="meter ok"><i style="width:${S.packing.length ? myDone / S.packing.length * 100 : 0}%"></i></div>
+      <div class="row mt"><span class="sub">${myDone} of ${S.packing.length} packed</span><span class="sp"></span><button class="btn sm" data-act="go-list" data-v="packing">Open list →</button></div>
+    </div>
+  </div>`;
+}
+function evMini(e) {
+  const c = CATS[e.cat] || CATS.chill;
+  return `<div class="check" style="cursor:pointer" data-act="edit-ev" data-id="${e.id}"><span class="cdot" style="background:${c.c};width:9px;height:9px"></span><span class="t"><b>${esc(e.title)}</b><br><span class="sub">${dParts(e.date).w} ${dParts(e.date).n} · ${fmtTime(e.time)}${e.place ? ' · ' + esc(e.place) : ''}</span></span></div>`;
+}
+
+function viewPlan() {
+  const dates = tripDates();
+  if (!dates.includes(S.planDay)) S.planDay = dates[0];
+  const head = `
+  <div class="sec-h no-print"><div><h2>Schedule</h2><div class="sub">Tap any plan to edit it. Everything saves on its own.</div></div><span class="sp"></span>
+    <div class="seg"><button class="${S.planMode === 'day' ? 'on' : ''}" data-act="plan-mode" data-v="day">Day view</button><button class="${S.planMode === 'full' ? 'on' : ''}" data-act="plan-mode" data-v="full">Full trip</button></div>
+    <button class="btn" data-act="print">Print</button>
+    <button class="btn pri" data-act="new-ev">+ Add plan</button>
+  </div>`;
+  if (S.planMode === 'full') {
+    return head + `<div class="full">${dates.map(d => {
+      const evs = S.events.filter(e => e.date === d).sort(evSort); const p = dParts(d);
+      const cost = evs.reduce((s, e) => s + num(e.cost), 0);
+      return `<div class="col"><div class="col-h"><div class="row"><span class="num">${p.w} ${p.n}</span><span class="sp"></span>${cost ? `<span class="chip">${inr(cost)}</span>` : ''}</div><div class="sub" style="font-weight:600">${esc(S.days[d] || '')}</div></div>
+        ${evs.length ? evs.map(e => { const c = CATS[e.cat] || CATS.chill; return `<div class="it" data-act="edit-ev" data-id="${e.id}"><span class="tm">${e.time ? fmtTime(e.time).replace(' ', '') : 'Any'}</span><span class="cdot" style="background:${c.c};transform:translateY(-1px)"></span><span>${esc(e.title)}${e.status === 'idea' ? ' <span class="chip st-idea">idea</span>' : ''}</span></div>`; }).join('') : '<div class="it sub">Free day</div>'}
+      </div>`;
+    }).join('')}</div>`;
+  }
+  const d = S.planDay, p = dParts(d);
+  const evs = S.events.filter(e => e.date === d).sort(evSort);
+  const cost = evs.reduce((s, e) => s + num(e.cost), 0);
+  return head + `
+  <div class="days no-print">${dates.map(x => { const q = dParts(x); const c = S.events.filter(e => e.date === x).length; return `<button class="day-pill ${x === d ? 'on' : ''}" data-act="day" data-v="${x}"><div class="dw">${q.w}</div><div class="dn">${q.n}</div><div class="dc">${c} plan${c === 1 ? '' : 's'}</div></button>`; }).join('')}</div>
+  <div class="day-head">
+    <div class="day-big">${p.n}</div>
+    <div style="flex:1;min-width:220px">
+      <div class="sub" style="font-weight:700;text-transform:uppercase;letter-spacing:.08em">${p.long}</div>
+      <textarea class="day-title" rows="1" placeholder="Name this day..." data-act="day-title" data-v="${d}">${esc(S.days[d] || '')}</textarea>
+    </div>
+    <div class="row"><span class="chip">${evs.length} plans</span><span class="chip">${inr(cost)} / head</span><button class="btn sm" data-act="new-ev" data-v="${d}">+ Add</button></div>
+  </div>
+  ${evs.length ? `<div class="tl">${evs.map(evCard).join('')}</div>` : `<div class="empty"><div class="e">🏝️</div><b>Nothing planned yet</b><div class="sub">Add a plan or grab one from Guide › Explore.</div><button class="btn pri mt" data-act="new-ev" data-v="${d}">+ Add plan</button></div>`}`;
+}
+function evCard(e) {
+  const c = CATS[e.cat] || CATS.chill;
+  return `<div class="ev" style="color:${c.c}"><span class="dot" style="background:${c.c}"></span>
+    <div class="ev-card" data-act="edit-ev" data-id="${e.id}">
+      <div class="ev-time">${e.time ? fmtTime(e.time) : 'Anytime'}${e.end ? `<small>to ${fmtTime(e.end)}</small>` : ''}</div>
+      <div><div class="ev-t">${esc(e.title)}</div>
+        <div class="ev-p"><span class="row" style="gap:6px"><span class="cdot" style="background:${c.c}"></span>${c.l}</span>${e.place ? `· <a href="${mapUrl(e.place)}" target="_blank" rel="noopener" data-stop="1">${esc(e.place)}</a>` : ''}</div>
+        ${e.notes ? `<div class="ev-n">${esc(e.notes)}</div>` : ''}
+      </div>
+      <div class="ev-r"><span class="chip st-${e.status}">${STATUS[e.status] || ''}</span>${num(e.cost) ? `<span class="chip">${inr(e.cost)}</span>` : ''}</div>
+    </div></div>`;
+}
+
+function viewMoney() {
+  const seg = `<div class="seg"><button class="${S.moneyTab === 'budget' ? 'on' : ''}" data-act="money-tab" data-v="budget">Budget</button><button class="${S.moneyTab === 'split' ? 'on' : ''}" data-act="money-tab" data-v="split">Split bills</button></div>`;
+  if (S.moneyTab === 'split') return viewSplit(seg);
+  const bt = budgetTotals(), sp = spentPP(), n = S.crew.length;
+  const pct = Math.min(100, bt.planned / bt.cap * 100 || 0);
+  return `<div class="sec-h"><div><h2>Budget</h2><div class="sub">Per person. Edit any number, totals update live.</div></div><span class="sp"></span>${seg}</div>
+  <div class="grid g4">
+    <div class="card stat"><div class="k">Planned</div><div class="v">${inr(bt.planned)}</div><div class="meter ${bt.planned > bt.cap ? 'bad' : pct > 92 ? 'warn' : 'ok'}"><i style="width:${pct}%"></i></div></div>
+    <div class="card stat"><div class="k">Headroom</div><div class="v ${bt.head < 0 ? 'neg' : 'pos'}">${inr(bt.head)}</div><div class="s">vs ${inr(bt.cap)} cap</div></div>
+    <div class="card stat"><div class="k">Paid so far</div><div class="v">${inr(bt.paid)}</div><div class="s">${inr(bt.planned - bt.paid)} left to spend/pay</div></div>
+    <div class="card stat"><div class="k">Group total</div><div class="v">${inr(bt.planned * n)}</div><div class="s">${n} people × planned</div></div>
+  </div>
+  <div class="card mt"><div class="scroll-x"><table class="tbl btbl">
+    <thead><tr><th class="ic-col"></th><th>Item</th><th class="n">Planned</th><th class="n">Paid</th><th class="n">Spent (Split)</th><th>Used</th><th></th></tr></thead>
+    <tbody>${S.budget.map(b => { const s = sp.m[b.id] || 0; const used = num(b.paid) + s; const pc = num(b.planned) ? Math.min(100, used / num(b.planned) * 100) : 0; return `<tr>
+      <td class="ic-col"><input value="${esc(b.icon)}" data-bind="budget.${b.id}.icon" style="text-align:center;padding:7px 4px"></td>
+      <td><input value="${esc(b.name)}" data-bind="budget.${b.id}.name" style="min-width:150px"></td>
+      <td data-l="Planned"><input class="n" type="number" inputmode="numeric" value="${num(b.planned)}" data-bind="budget.${b.id}.planned"></td>
+      <td data-l="Paid"><input class="n" type="number" inputmode="numeric" value="${num(b.paid)}" data-bind="budget.${b.id}.paid"></td>
+      <td class="n">${s ? inr(s) + '<span class="sub"> spent</span>' : '<span class="sub">-</span>'}</td>
+      <td><div class="mini-bar ${used > num(b.planned) ? 'over' : ''}"><i style="width:${pc}%"></i></div></td>
+      <td><button class="icon-btn" data-act="del" data-coll="budget" data-id="${b.id}" title="Remove">✕</button></td></tr>`; }).join('')}</tbody>
+    <tfoot><tr><td class="ic-col"></td><td>Total</td><td class="n">${inr(bt.planned)}</td><td class="n">${inr(bt.paid)}</td><td class="n">${inr(sp.t)}</td><td colspan="2"></td></tr></tfoot>
+  </table></div>
+  <button class="btn sm mt" data-act="add-budget">+ Add line</button></div>
+  <div class="sub mt">Tip: when you log a shared bill in Split, pick its budget line. "Spent" fills in automatically, so you see where the money actually went.</div>`;
+}
+
+function viewSplit(seg) {
+  const bal = balances(), tx = settle(bal), total = S.expenses.reduce((s, e) => s + num(e.amount), 0);
+  return `<div class="sec-h"><div><h2>Split bills</h2><div class="sub">Log who paid. The app works out who owes whom, in the fewest transfers.</div></div><span class="sp"></span>${seg}</div>
+  <div class="grid g2">
+    <div class="card">
+      <h3 class="mb">Add a bill</h3>
+      <div class="grid" style="gap:10px">
+        <div><label class="f">What</label><input id="x-title" placeholder="Dinner at Martin's Corner"></div>
+        <div class="row" style="flex-wrap:nowrap"><div style="flex:1"><label class="f">Amount (₹)</label><input id="x-amt" type="number" inputmode="numeric" placeholder="4800"></div>
+          <div style="flex:1"><label class="f">Paid by</label><select id="x-payer">${S.crew.map(p => `<option value="${p.id}" ${p.id === S.me ? 'selected' : ''}>${esc(p.name)}</option>`).join('')}</select></div></div>
+        <div><label class="f">Budget line</label><select id="x-cat">${S.budget.map(b => `<option value="${b.id}" ${/food/i.test(b.name) ? 'selected' : ''}>${esc(b.name)}</option>`).join('')}</select></div>
+        <div><label class="f">Split between</label><div class="cats" id="x-split">${S.crew.map(p => `<button type="button" class="on" data-pid="${p.id}">${esc(p.name)}</button>`).join('')}</div></div>
+        <button class="btn pri" data-act="add-exp" style="justify-content:center">Add bill</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="row mb"><h3>Settle up</h3><span class="sp"></span><span class="chip">Group spend ${inr(total)}</span></div>
+      ${S.crew.map(p => { const v = bal[p.id] || 0; return `<div class="check">${avatar(p)}<span class="t">${esc(p.name)}</span><b class="${v > 0.5 ? 'pos' : v < -0.5 ? 'neg' : 'sub'}">${Math.abs(v) < 0.5 ? 'settled' : (v > 0 ? 'gets ' : 'owes ') + inr(Math.abs(v))}</b></div>`; }).join('')}
+      <div class="mt" style="border-top:1px solid var(--line);padding-top:12px">${tx.length ? tx.map(t => `<div class="row" style="padding:5px 0"><b>${esc(pname(t.from))}</b><span class="sub">pays</span><b>${esc(pname(t.to))}</b><span class="sp"></span><span class="chip st-booked">${inr(t.amt)}</span></div>`).join('') : '<div class="sub">All square. Nobody owes anything.</div>'}</div>
+    </div>
+  </div>
+  <div class="card mt"><h3 class="mb">All bills</h3>
+    ${S.expenses.length ? [...S.expenses].reverse().map(e => { const b = S.budget.find(x => x.id === e.cat); return `<div class="check">${avatar(person(e.payer) || {name: '?', color: '#ccc'})}<span class="t"><b>${esc(e.title)}</b><br><span class="sub">${esc(pname(e.payer))} paid · split ${e.split.length} ways · ${esc(e.date)}</span></span><b>${inr(e.amount)}</b><button class="icon-btn" data-act="del" data-coll="expenses" data-id="${e.id}">✕</button></div>`; }).join('') : '<div class="empty"><div class="e">🧾</div>No bills yet. Every shared dinner, fuel stop and cab goes here.</div>'}
+  </div>`;
+}
+
+function viewLists() {
+  const seg = `<div class="seg">${[['packing','Packing'],['gear','Shared gear'],['bookings','Bookings']].map(([k, l]) => `<button class="${S.listTab === k ? 'on' : ''}" data-act="list-tab" data-v="${k}">${l}</button>`).join('')}</div>`;
+  if (S.listTab === 'gear') {
+    const done = S.gear.filter(g => g.done).length;
+    return `<div class="sec-h"><div><h2>Shared gear</h2><div class="sub">Stuff only one person needs to bring. Assign it so nobody doubles up.</div></div><span class="sp"></span>${seg}</div>
+    <div class="card"><div class="meter ok mb"><i style="width:${S.gear.length ? done / S.gear.length * 100 : 0}%"></i></div>
+      ${S.gear.map(g => `<div class="check ${g.done ? 'done' : ''}"><input type="checkbox" ${g.done ? 'checked' : ''} data-act="gear-done" data-id="${g.id}"><span class="t">${esc(g.text)}</span>
+        <select data-bind="gear.${g.id}.who"><option value="">Who brings?</option>${S.crew.map(p => `<option value="${p.id}" ${g.who === p.id ? 'selected' : ''}>${esc(p.name)}</option>`).join('')}</select>
+        <button class="icon-btn" data-act="del" data-coll="gear" data-id="${g.id}">✕</button></div>`).join('')}
+      <div class="add-line"><input id="gear-new" placeholder="Add shared item..."><button class="btn" data-act="add-gear">Add</button></div></div>`;
+  }
+  if (S.listTab === 'bookings') {
+    return `<div class="sec-h"><div><h2>Bookings & payments</h2><div class="sub">PNRs, refs, dues and contacts in one place. Amounts are per person.</div></div><span class="sp"></span>${seg}</div>
+    <div class="grid g2">${S.bookings.map(b => `<div class="card bk">
+      <div class="bk-top"><input class="name" value="${esc(b.name)}" data-bind="bookings.${b.id}.name"><select style="width:auto" data-bind="bookings.${b.id}.status"><option value="todo" ${b.status === 'todo' ? 'selected' : ''}>To do</option><option value="partial" ${b.status === 'partial' ? 'selected' : ''}>Partial</option><option value="done" ${b.status === 'done' ? 'selected' : ''}>Done ✓</option></select><button class="icon-btn" data-act="del" data-coll="bookings" data-id="${b.id}">✕</button></div>
+      <div class="bk-grid">
+        <div><label>PNR / Ref</label><input value="${esc(b.ref)}" data-bind="bookings.${b.id}.ref" placeholder="-"></div>
+        <div><label>Due / head ₹</label><input type="number" value="${num(b.due)}" data-bind="bookings.${b.id}.due"></div>
+        <div><label>Date</label><input type="date" value="${esc(b.date)}" data-bind="bookings.${b.id}.date"></div>
+        <div><label>Contact</label><input value="${esc(b.contact)}" data-bind="bookings.${b.id}.contact" placeholder="-"></div>
+      </div>
+      <input value="${esc(b.notes)}" data-bind="bookings.${b.id}.notes" placeholder="Notes">
+    </div>`).join('')}</div>
+    <button class="btn mt" data-act="add-booking">+ Add booking</button>`;
+  }
+  const groups = [...new Set(S.packing.map(p => p.group))];
+  const myDone = S.packing.filter(p => p.done[S.me]).length;
+  return `<div class="sec-h"><div><h2>Packing list</h2><div class="sub">Everyone ticks their own copy. Pick your name.</div></div><span class="sp"></span>${seg}</div>
+  <div class="card mb"><div class="row"><span class="sub" style="font-weight:700">Packing as</span><select style="width:auto" data-act="set-me">${S.crew.map(p => `<option value="${p.id}" ${p.id === S.me ? 'selected' : ''}>${esc(p.name)}</option>`).join('')}</select><span class="sp"></span><b>${myDone}/${S.packing.length}</b></div>
+    <div class="meter ok mt"><i style="width:${S.packing.length ? myDone / S.packing.length * 100 : 0}%"></i></div>
+    <div class="crew mt">${S.crew.map(p => { const d = S.packing.filter(x => x.done[p.id]).length; return `<span class="crew-chip">${avatar(p)}${esc(p.name)} <span class="sub">${S.packing.length ? Math.round(d / S.packing.length * 100) : 0}%</span></span>`; }).join('')}</div></div>
+  <div class="grid g2">${groups.map(g => `<div class="card"><h3 class="mb">${esc(g)}</h3>
+    ${S.packing.filter(p => p.group === g).map(p => `<div class="check ${p.done[S.me] ? 'done' : ''}"><input type="checkbox" ${p.done[S.me] ? 'checked' : ''} data-act="pack" data-id="${p.id}"><span class="t">${esc(p.text)}</span><button class="icon-btn" data-act="del" data-coll="packing" data-id="${p.id}">✕</button></div>`).join('')}
+    <div class="add-line"><input placeholder="Add to ${esc(g)}..." data-group="${esc(g)}" class="pack-new"><button class="btn sm" data-act="add-pack">Add</button></div></div>`).join('')}
+    <div class="card flat"><h3 class="mb">New section</h3><div class="add-line"><input id="pack-group" placeholder="e.g. Party supplies"><button class="btn sm" data-act="add-group">Create</button></div></div>
+  </div>`;
+}
+
+function viewGuide() {
+  const seg = `<div class="seg">${[['explore','Explore'],['code','Trip code'],['sos','Emergency']].map(([k, l]) => `<button class="${S.guideTab === k ? 'on' : ''}" data-act="guide-tab" data-v="${k}">${l}</button>`).join('')}</div>`;
+  if (S.guideTab === 'code') {
+    return `<div class="sec-h"><div><h2>The boys trip code</h2><div class="sub">Read it once on the train. It\'s what keeps the trip fun.</div></div><span class="sp"></span>${seg}</div>
+    <div class="grid g2">${RULES.map(r => `<div class="card rule"><div class="ic">${String(RULES.indexOf(r) + 1).padStart(2, '0')}</div><div><h3>${esc(r.t)}</h3><p>${esc(r.p)}</p>${r.l ? `<ul>${r.l.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}</div></div>`).join('')}</div>
+    <div class="sub mt">Fines and rules as reported in Goa news through 2025. Rules change, so check locally if unsure.</div>`;
+  }
+  if (S.guideTab === 'sos') {
+    return `<div class="sec-h"><div><h2>Emergency & contacts</h2><div class="sub">Tap a number to call. Add your host and rental guy.</div></div><span class="sp"></span>${seg}</div>
+    <div class="card">${S.contacts.map(c => `<div class="contact"><div class="ci">${esc(c.icon || '📞')}</div>
+      <div style="flex:1;display:grid;gap:4px;grid-template-columns:1fr 1fr" class="ct-f"><input value="${esc(c.name)}" data-bind="contacts.${c.id}.name" style="font-weight:700"><input value="${esc(c.num)}" data-bind="contacts.${c.id}.num" placeholder="Number" inputmode="tel"><input value="${esc(c.note)}" data-bind="contacts.${c.id}.note" placeholder="Note" style="grid-column:1/-1;font-size:13px"></div>
+      ${c.num ? `<a class="call" href="tel:${esc(c.num.replace(/\s/g, ''))}">Call</a>` : ''}<button class="icon-btn" data-act="del" data-coll="contacts" data-id="${c.id}">✕</button></div>`).join('')}
+      <button class="btn sm mt" data-act="add-contact">+ Add contact</button></div>
+    <div class="card flat mt"><h3>Stay address</h3><div class="sub" style="margin-top:4px">${esc(S.trip.stay)} · <a href="${mapUrl(S.trip.stay)}" target="_blank" rel="noopener" style="color:var(--sky)">Open in Maps</a>. Screenshot it for every phone, in case someone gets separated.</div></div>`;
+  }
+  const f = S.guideFilter;
+  const list = IDEAS.filter(x => f === 'all' || x.r === f);
+  return `<div class="sec-h"><div><h2>Explore</h2><div class="sub">Handpicked spots. Tap + to drop one straight into a day.</div></div><span class="sp"></span>${seg}</div>
+  <div class="seg mb">${[['all','All'],['south','South (near you)'],['north','North'],['night','Nightlife'],['food','Food']].map(([k, l]) => `<button class="${f === k ? 'on' : ''}" data-act="guide-filter" data-v="${k}">${l}</button>`).join('')}</div>
+  <div class="grid g3">${list.map(x => { const c = CATS[x.cat]; const i = IDEAS.indexOf(x); return `<div class="card idea"><div class="row"><span class="chip"><span class="cdot" style="background:${c.c}"></span>${c.l}</span><span class="chip" style="text-transform:capitalize">${x.r}</span></div>
+    <h3>${esc(x.t)}</h3><p>${esc(x.n)}</p>
+    <div class="row"><span class="price">${x.c ? '~' + inr(x.c) + ' / head' : 'Free'}</span><span class="sp"></span>${x.p ? `<a class="btn sm ghost" href="${mapUrl(x.p)}" target="_blank" rel="noopener">Map</a>` : ''}<button class="btn sm" data-act="idea-add" data-v="${i}">+ Add to day</button></div></div>`; }).join('')}</div>
+  <div class="sub mt">Prices are rough per-person guides. December rates run higher, so confirm before you go.</div>`;
+}
+
+function viewSetup() {
+  const t = S.trip;
+  return `<div class="sec-h"><div><h2>Setup</h2><div class="sub">Trip basics, crew names and your data.</div></div></div>
+  <div class="grid g2">
+    <div class="card"><h3 class="mb">Trip</h3><div class="grid" style="gap:12px">
+      <div class="row" style="flex-wrap:nowrap"><div style="flex:1"><label class="f">Trip name</label><input value="${esc(t.name)}" data-bind="trip..name"></div><div style="flex:1"><label class="f">Tagline</label><input value="${esc(t.sub)}" data-bind="trip..sub"></div></div>
+      <div class="row" style="flex-wrap:nowrap"><div style="flex:1"><label class="f">First day</label><input type="date" value="${t.start}" data-bind="trip..start"></div><div style="flex:1"><label class="f">Last day</label><input type="date" value="${t.end}" data-bind="trip..end"></div></div>
+      <div><label class="f">Countdown to (train departure)</label><input type="datetime-local" value="${t.depart}" data-bind="trip..depart"></div>
+      <div class="row" style="flex-wrap:nowrap"><div style="flex:1"><label class="f">Budget cap / head ₹</label><input type="number" value="${num(t.cap)}" data-bind="trip..cap"></div><div style="flex:1"><label class="f">Stay</label><input value="${esc(t.stay)}" data-bind="trip..stay"></div></div>
+    </div></div>
+    <div class="card"><h3 class="mb">Crew</h3>
+      ${S.crew.map(p => `<div class="check">${avatar(p)}<input value="${esc(p.name)}" data-bind="crew.${p.id}.name"><button class="icon-btn" data-act="del-crew" data-id="${p.id}">✕</button></div>`).join('')}
+      <button class="btn sm mt" data-act="add-crew">+ Add person</button>
+    </div>
+    <div class="card"><h3>Your data</h3><div class="sub" style="margin:6px 0 14px">Everything saves in this browser on this device. To sync with the boys, Export and send the file in the group; they Import it.</div>
+      <div class="row"><button class="btn" data-act="export">Export backup</button><label class="btn" style="cursor:pointer">Import<input type="file" accept=".json,application/json" id="imp" hidden></label><span class="sp"></span><button class="btn danger" data-act="reset">Reset</button></div>
+    </div>
+  </div>`;
+}
+
+/* ===== render ===== */
+function render() {
+  renderNav();
+  const v = {home: viewHome, plan: viewPlan, money: viewMoney, lists: viewLists, guide: viewGuide, setup: viewSetup}[S.tab] || viewHome;
+  $('#app').innerHTML = v();
+  tick();
+}
+function tick() {
+  const el = $('#cd'); if (!el) return;
+  const ms = new Date(S.trip.depart) - new Date();
+  if (!(ms > 0)) { el.innerHTML = `<div style="min-width:auto;padding:12px 18px"><b style="font-size:30px;font-family:var(--display);font-weight:400">${new Date() < new Date(S.trip.end + 'T23:59') ? "Goa mode: on." : 'Legendary trip. Same time next year?'}</b></div>`; return; }
+  const d = Math.floor(ms / 864e5), h = Math.floor(ms / 36e5) % 24, m = Math.floor(ms / 6e4) % 60, s = Math.floor(ms / 1e3) % 60;
+  el.innerHTML = [[d, 'days'], [h, 'hrs'], [m, 'min'], [s, 'sec']].map(([v, l]) => `<div><b>${String(v).padStart(2, '0')}</b><span>${l}</span></div>`).join('');
+}
+setInterval(tick, 1000);
+
+/* ===== event modal ===== */
+function openEv(ev) {
+  const isNew = !S.events.some(e => e.id === ev.id);
+  const dates = tripDates();
+  $('#modal').innerHTML = `
+    <div class="row mb"><h2 style="font-size:22px">${isNew ? 'New plan' : 'Edit plan'}</h2><span class="sp"></span><button class="icon-btn" data-act="close">✕</button></div>
+    <div class="grid" style="gap:12px">
+      <div><label class="f">What</label><input id="m-title" value="${esc(ev.title)}" placeholder="Sunset at Chapora Fort"></div>
+      <div><label class="f">Type</label><div class="cats" id="m-cat">${Object.entries(CATS).map(([k, c]) => `<button type="button" data-v="${k}" class="${ev.cat === k ? 'on' : ''}" ><span class="cdot" style="background:${c.c}"></span>${c.l}</button>`).join('')}</div></div>
+      <div class="row" style="flex-wrap:nowrap">
+        <div style="flex:1.4"><label class="f">Day</label><select id="m-date">${dates.map(d => { const p = dParts(d); return `<option value="${d}" ${d === ev.date ? 'selected' : ''}>${p.w} ${p.n} ${p.m}</option>`; }).join('')}</select></div>
+        <div style="flex:1"><label class="f">Start</label><input type="time" id="m-time" value="${esc(ev.time)}"></div>
+        <div style="flex:1"><label class="f">End</label><input type="time" id="m-end" value="${esc(ev.end)}"></div>
+      </div>
+      <div><label class="f">Place (opens in Maps)</label><input id="m-place" value="${esc(ev.place)}" placeholder="Chapora Fort"></div>
+      <div class="row" style="flex-wrap:nowrap">
+        <div style="flex:1"><label class="f">Cost / head ₹</label><input type="number" inputmode="numeric" id="m-cost" value="${num(ev.cost) || ''}" placeholder="0"></div>
+        <div style="flex:1"><label class="f">Status</label><select id="m-status">${Object.entries(STATUS).map(([k, l]) => `<option value="${k}" ${ev.status === k ? 'selected' : ''}>${l}</option>`).join('')}</select></div>
+      </div>
+      <div><label class="f">Notes</label><textarea id="m-notes" placeholder="Book ahead, carry cash, etc.">${esc(ev.notes)}</textarea></div>
+      <div class="row">${isNew ? '' : `<button class="btn danger" data-act="del-ev" data-id="${ev.id}">Delete</button><button class="btn" data-act="dup-ev" data-id="${ev.id}">Duplicate</button>`}<span class="sp"></span><button class="btn ghost" data-act="close">Cancel</button><button class="btn pri" data-act="save-ev" data-id="${ev.id}">Save</button></div>
+    </div>`;
+  $('#ov').classList.add('open');
+  setTimeout(() => { if (isNew && !ev.title) $('#m-title').focus(); }, 50);
+}
+function closeModal() { $('#ov').classList.remove('open'); }
+function newEv(o = {}) { return Object.assign({id: uid(), date: S.planDay || tripDates()[0], time: '', end: '', title: '', cat: 'explore', place: '', cost: 0, status: 'planned', notes: ''}, o); }
+
+/* ===== actions ===== */
+document.addEventListener('click', e => {
+  if (e.target.closest('[data-stop]')) { e.stopPropagation(); return; }
+  if (e.target === $('#ov')) return closeModal();
+  const t = e.target.closest('[data-act]'); if (!t) return;
+  const a = t.dataset.act, v = t.dataset.v, id = t.dataset.id;
+  if (t.tagName === 'SELECT' || (t.tagName === 'INPUT' && t.type !== 'button')) return;
+  switch (a) {
+    case 'tab': S.tab = v; save(); render(); scrollTo(0, 0); break;
+    case 'go-list': S.tab = 'lists'; S.listTab = v; save(); render(); scrollTo(0, 0); break;
+    case 'day': S.planDay = v; save(); render(); break;
+    case 'plan-mode': S.planMode = v; save(); render(); break;
+    case 'money-tab': S.moneyTab = v; save(); render(); break;
+    case 'list-tab': S.listTab = v; save(); render(); break;
+    case 'guide-tab': S.guideTab = v; save(); render(); break;
+    case 'guide-filter': S.guideFilter = v; save(); render(); break;
+    case 'print': S.planMode = 'full'; save(); render(); setTimeout(() => print(), 150); break;
+    case 'new-ev': openEv(newEv(v ? {date: v} : {})); break;
+    case 'edit-ev': { const ev = S.events.find(x => x.id === id); if (ev) openEv({...ev}); break; }
+    case 'idea-add': { const x = IDEAS[+v]; openEv(newEv({title: x.t, place: x.p, cat: x.cat, cost: x.c, notes: x.n, status: 'idea'})); break; }
+    case 'close': closeModal(); break;
+    case 'save-ev': {
+      const title = $('#m-title').value.trim(); if (!title) { $('#m-title').focus(); toast('Give it a name'); return; }
+      const on = $('#m-cat button.on');
+      const ev = {id, title, cat: on ? on.dataset.v : 'explore', date: $('#m-date').value, time: $('#m-time').value, end: $('#m-end').value, place: $('#m-place').value.trim(), cost: num($('#m-cost').value), status: $('#m-status').value, notes: $('#m-notes').value.trim()};
+      const i = S.events.findIndex(x => x.id === id); if (i >= 0) S.events[i] = ev; else S.events.push(ev);
+      S.planDay = ev.date; save(); closeModal(); render(); toast('Saved ✓'); break;
+    }
+    case 'del-ev': if (confirm('Delete this plan?')) { S.events = S.events.filter(x => x.id !== id); save(); closeModal(); render(); toast('Deleted'); } break;
+    case 'dup-ev': { const ev = S.events.find(x => x.id === id); if (ev) { closeModal(); openEv({...ev, id: uid(), title: ev.title + ' (copy)'}); } break; }
+    case 'del': { const c = t.dataset.coll; S[c] = S[c].filter(x => x.id !== id); save(); render(); break; }
+    case 'add-budget': S.budget.push({id: uid(), icon: '💸', name: 'New item', planned: 0, paid: 0}); save(); render(); break;
+    case 'add-exp': {
+      const title = $('#x-title').value.trim(), amount = num($('#x-amt').value);
+      const split = [...document.querySelectorAll('#x-split button.on')].map(b => b.dataset.pid);
+      if (!title || amount <= 0) { toast('Add a name and amount'); return; }
+      if (!split.length) { toast('Pick who it\'s split between'); return; }
+      S.expenses.push({id: uid(), title, amount, payer: $('#x-payer').value, cat: $('#x-cat').value, split, date: iso(new Date())});
+      save(); render(); toast('Bill added ✓'); break;
+    }
+    case 'add-gear': { const i = $('#gear-new'); if (i.value.trim()) { S.gear.push({id: uid(), text: i.value.trim(), who: '', done: false}); save(); render(); } break; }
+    case 'add-pack': { const i = t.parentElement.querySelector('input'); if (i.value.trim()) { S.packing.push({id: uid(), group: i.dataset.group, text: i.value.trim(), done: {}}); save(); render(); } break; }
+    case 'add-group': { const i = $('#pack-group'); const g = i.value.trim(); if (g) { S.packing.push({id: uid(), group: g, text: 'First item', done: {}}); save(); render(); } break; }
+    case 'add-booking': S.bookings.push({id: uid(), name: 'New booking', ref: '', status: 'todo', due: 0, date: '', contact: '', notes: ''}); save(); render(); break;
+    case 'add-contact': S.contacts.push({id: uid(), icon: '📞', name: 'New contact', num: '', note: ''}); save(); render(); break;
+    case 'add-crew': S.crew.push({id: uid(), name: 'New person', color: COLORS[S.crew.length % COLORS.length]}); save(); render(); break;
+    case 'del-crew': if (S.crew.length > 1 && confirm('Remove this person? Their bills stay but won\'t count in balances.')) { S.crew = S.crew.filter(p => p.id !== id); if (S.me === id) S.me = S.crew[0].id; save(); render(); } break;
+    case 'export': {
+      const blob = new Blob([JSON.stringify(S, null, 2)], {type: 'application/json'});
+      const a2 = document.createElement('a'); a2.href = URL.createObjectURL(blob); a2.download = 'goa26-planner-' + iso(new Date()) + '.json'; a2.click(); setTimeout(() => URL.revokeObjectURL(a2.href), 2000); toast('Backup downloaded'); break;
+    }
+    case 'reset': if (confirm('Reset everything to the starter plan? Export a backup first if you need it.')) { S = defaults(); save(); render(); toast('Reset done'); } break;
+  }
+});
+// category chips in modal + split chips
+document.addEventListener('click', e => {
+  const c = e.target.closest('#m-cat button');
+  if (c) { document.querySelectorAll('#m-cat button').forEach(b => { b.classList.remove('on'); b.style.background = ''; }); c.classList.add('on'); }
+  const s = e.target.closest('#x-split button');
+  if (s) { s.classList.toggle('on');  }
+});
+document.addEventListener('change', e => {
+  const t = e.target;
+  if (t.id === 'imp') {
+    const f = t.files[0]; if (!f) return;
+    const r = new FileReader();
+    r.onload = () => { try { const d = JSON.parse(r.result); if (!d || d.v !== 1 || !Array.isArray(d.events)) throw 0; S = Object.assign(defaults(), d); save(); render(); toast('Imported ✓'); } catch (err) { toast('That file doesn\'t look like a planner backup'); } };
+    r.readAsText(f); return;
+  }
+  const a = t.dataset.act;
+  if (a === 'set-me') { S.me = t.value; save(); render(); return; }
+  if (a === 'pack') { const p = S.packing.find(x => x.id === t.dataset.id); if (p) { p.done[S.me] = t.checked; save(); render(); } return; }
+  if (a === 'gear-done') { const g = S.gear.find(x => x.id === t.dataset.id); if (g) { g.done = t.checked; save(); render(); } return; }
+  if (a === 'day-title') { S.days[t.dataset.v] = t.value; save(); return; }
+  const b = t.dataset.bind; if (!b) return;
+  const [coll, id, f] = b.split('.');
+  const isNum = t.type === 'number';
+  const val = isNum ? num(t.value) : t.value;
+  if (coll === 'trip') S.trip[f] = val;
+  else { const o = S[coll].find(x => x.id === id); if (o) o[f] = val; }
+  save(); render();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+  if (e.key === 'Enter' && e.target.matches('#gear-new,.pack-new,#pack-group')) { e.preventDefault(); const btn = e.target.parentElement.querySelector('button'); btn && btn.click(); }
+  if (e.key === 'Enter' && e.target.classList.contains('day-title')) e.target.blur();
+});
+
+render();
+</script>
+</body>
+</html>
